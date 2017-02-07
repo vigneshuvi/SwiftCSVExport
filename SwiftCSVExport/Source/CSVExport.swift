@@ -43,6 +43,25 @@ open class CSVExport {
         }
         return path;
     }
+    
+    open func exportCSV(_ filename:String, fields: NSArray, values: NSArray) -> String{
+        
+        if filename.length > 0 {
+            CSVExport.export.fileName = filename;
+        }
+        CSVExport.export.cleanup();
+        if fields.count > 0 && values.count > 0 {
+            let  result:String = fields.componentsJoined(by: ",");
+            CSVExport.export.write( text: result)
+            for dict in values {
+                let values = (dict as! NSDictionary).allValues as NSArray;
+                let  result:String = values.componentsJoined(by: ",");
+                CSVExport.export.write( text: result)
+            }
+            return CSVExport.export.getFilePath();
+        }
+        return "";
+    }
 
     
     ///write content to the current csv file.
@@ -126,19 +145,10 @@ open class CSVExport {
 
 ///a free function to make export the CSV file from file name, fields and values
 public func exportCSV(_ filename:String, fields: NSArray, values: NSArray) -> String{
-    
-    if filename.length > 0 {
-        CSVExport.export.fileName = filename;
-    }
-    CSVExport.export.cleanup();
-    if fields.count > 0 && values.count > 0 {
-        let  result:String = fields.componentsJoined(by: ",");
-        CSVExport.export.write( text: result)
-        for dict in values {
-            let values = (dict as! NSDictionary).allValues as NSArray;
-            let  result:String = values.componentsJoined(by: ",");
-            CSVExport.export.write( text: result)
-        }
-    }
-    return CSVExport.export.getFilePath();
+    return CSVExport.export.exportCSV(filename, fields: fields, values: values);
+}
+
+///a free function to make export the CSV file from file name, fields and values
+public func exportCSV(_ filename:String, fields: [String], values: NSArray) -> String{
+    return CSVExport.export.exportCSV(filename, fields: fields as NSArray, values: values);
 }

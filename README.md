@@ -24,8 +24,25 @@ import SwiftCSVExportOSX
 ```swift
 
 
-// String
-let filePath:String = exportCSV("userlist", fields:["name","email"], values:[{"name":"vignesh","email":"vigneshuvi@gmail.com"}{"name":"vinoth","email":"vinoth@gmail.com"}] );
+// Generate CSV file
+let user1:NSMutableDictionary = NSMutableDictionary()
+user1.setObject("vignesh", forKey: "name" as NSCopying);
+user1.setObject("vigneshuvi@gmail.com", forKey: "email" as NSCopying);
+
+let user2:NSMutableDictionary = NSMutableDictionary()
+user2.setObject("vinoth", forKey: "name" as NSCopying);
+user2.setObject("vinoth@gmail.com", forKey: "email" as NSCopying);
+
+let fields:NSMutableArray = NSMutableArray()
+fields.add("name");
+fields.add("email");
+
+let data:NSMutableArray  = NSMutableArray()
+data.add(user1);
+data.add(user2);
+
+let path:String = SwiftCSVExport.exportCSV("userlist",fields: fields,values: data);
+print(path)
 
 // Just for fun!!
 Output: userlist.csv
