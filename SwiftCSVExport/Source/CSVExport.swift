@@ -84,9 +84,11 @@ open class CSVExport {
     ///check the size of a file
     func fileSize(_ path: String) -> UInt64 {
         let fileManager = FileManager.default
-        let attrs: NSDictionary? = try! fileManager.attributesOfItem(atPath: path) as NSDictionary?
-        if let dict = attrs {
-            return dict.fileSize()
+        if fileManager.fileExists(atPath: path) {
+            let attrs: NSDictionary? = try! fileManager.attributesOfItem(atPath: path) as NSDictionary?
+            if let dict = attrs {
+                return dict.fileSize()
+            }
         }
         return 0
     }
