@@ -6,6 +6,7 @@ Simple way to export csv file with rich feature framework in Swift.
 - Able to give CSV file name.
 - Able to set CSV headers using fields.
 - Able to convert JSON string into CSV.
+- Able to Read the CSV file and convert to NSDictionary.
 
 First thing is to import the framework. See the Installation instructions on how to add the framework to your project.
 
@@ -104,10 +105,18 @@ let string = "[{\"name\":\"vignesh\",\"email\":\"vigneshuvi@gmail.com\"},{\"name
 let filePath:String = exportCSV("userlist", fields:["name","email"], values:string);
 print(filePath)
 
+// Read File
+let fileDetails = readCSV(filePath);
+
+// Use 'SwiftLoggly' pod framework to print the Dictionary
+if fileDetails.allKeys.count > 0 {
+    loggly(LogType.Info, dictionary: fileDetails)
+}
+
 
 ```
 
-## Outputs:
+### Write Output:
 
 ```swift
 
@@ -118,6 +127,47 @@ vignesh,vigneshuvi@gmail.com
 vinoth,vinoth@gmail.com
 
 ```
+
+### Example 4
+
+```swift
+
+// Read File
+let fileDetails = readCSV(filePath);
+
+// Use 'SwiftLoggly' pod framework to print the Dictionary
+if fileDetails.allKeys.count > 0 {
+    loggly(LogType.Info, dictionary: fileDetails)
+}
+
+
+```
+
+### Read Output:
+
+```swift
+
+[💙 Info -  Feb 7, 2017, 4:19:23 PM]: {
+  "rows" : [
+    {
+      "name" : "vignesh",
+      "email" : "vigneshuvi@gmail.com"
+    },
+    {
+      "name" : "vinoth",
+      "email" : "vinoth@gmail.com"
+    }
+  ],
+  "name" : "userlist.csv",
+  "fields" : [
+    "name",
+    "email"
+  ]
+}
+
+
+```
+
 
 That will create a CSV file in the proper directory on both OS X and iOS.
 
