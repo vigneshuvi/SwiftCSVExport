@@ -108,9 +108,7 @@ open class CSVExport {
     }
     
     open func read(filepath: String) -> NSMutableDictionary {
-        let path = "\(directory)/\(filepath)"
-        return self.readFromPath(filePath:path);
-        
+        return self.readFromPath(filePath:filepath);
     }
     
     /// read content to the current csv file.
