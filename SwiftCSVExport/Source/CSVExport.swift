@@ -70,7 +70,6 @@ open class CSVExport {
         let path = "\(directory)/\(csvFileName())"
         let size = fileSize(path)
         if size > 0 {
-            rename()
             //delete the oldest file
             let deletePath = "\(directory)/\(csvFileName())"
             let fileManager = FileManager.default
@@ -93,19 +92,6 @@ open class CSVExport {
         return 0
     }
     
-    ///Recursive method call to rename CSV files
-    func rename() {
-        let fileManager = FileManager.default
-        let path = "\(directory)/\(csvFileName())"
-        let newPath = "\(directory)/\(csvFileName())"
-        if fileManager.fileExists(atPath: newPath) {
-            rename()
-        }
-        do {
-            try fileManager.moveItem(atPath: path, toPath: newPath)
-        } catch _ {
-        }
-    }
     
     ///gets the CSV name
     func csvFileName() -> String {
