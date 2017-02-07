@@ -56,7 +56,7 @@ open class CSVExport {
             }
         }
         if let fileHandle = FileHandle(forWritingAtPath: path) {
-            let writeText = "[\(text)\n"
+            let writeText = "\(text)\n"
             fileHandle.seekToEndOfFile()
             fileHandle.write(writeText.data(using: String.Encoding.utf8)!)
             fileHandle.closeFile()
