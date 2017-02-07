@@ -84,6 +84,90 @@ open class CSVExport {
         }
     }
     
+    func generateDict(_ fieldsArray: NSArray, valuesArray: NSArray ) -> NSMutableDictionary {
+        let rowsDictionary:NSMutableDictionary = NSMutableDictionary()
+        for i in 0..<valuesArray.count {
+            let key = fieldsArray[i];
+            let value = valuesArray[i];
+            rowsDictionary.setObject(value, forKey: key as! NSCopying);
+            return rowsDictionary;
+        }
+        return rowsDictionary;
+    }
+    
+    func splitUsingDelimiter(_ string: String, separatedBy: String) -> NSArray {
+        if string.characters.count > 0 {
+            return string.components(separatedBy: separatedBy) as NSArray;
+        }
+        return [];
+    }
+    
+    open func read(filename: String) -> NSMutableDictionary {
+        let path = "\(directory)/\(filename)"
+        return self.readFromPath(filePath:path);
+    }
+    
+    open func read(filepath: String) -> NSMutableDictionary {
+        let path = "\(directory)/\(filepath)"
+        return self.readFromPath(filePath:path);
+        
+    }
+    
+    /// read content to the current csv file.
+    open func readFromPath(filePath: String) -> NSMutableDictionary{
+        let fileManager = FileManager.default
+        let output:NSMutableDictionary = NSMutableDictionary()
+        
+        // Find the CSV file path is available
+        if fileManager.fileExists(atPath: filePath) {
+            do {
+                // Generate the Local file path URL
+                let localPathURL: URL = NSURL.fileURL(withPath: filePath);
+                
+                // Read the content from Local Path
+                let csvText = try String(contentsOf: localPathURL, encoding: String.Encoding.utf8);
+                
+                // Check the csv count
+                if csvText.characters.count > 0 {
+                    
+                    // Split based on Newline delimiter
+                    let csvArray = self.splitUsingDelimiter(csvText, separatedBy: "\n") as NSArray
+                    if csvArray.count >= 2 {
+                        var fieldsArray:NSArray = [];
+                        let rowsArray:NSMutableArray  = NSMutableArray()
+                        for row in csvArray {
+                            // Get the CSV headers
+                            if((row as! String).contains(csvArray[0] as! String)) {
+                                fieldsArray = self.splitUsingDelimiter(row as! String, separatedBy: ",") as NSArray;
+                            } else {
+                                // Get the CSV values
+                                let valuesArray = self.splitUsingDelimiter(row as! String, separatedBy: ",") as NSArray;
+                                if valuesArray.count == fieldsArray.count  && valuesArray.count > 0{
+                                    let rowJson:NSMutableDictionary = self.generateDict(fieldsArray, valuesArray: valuesArray)
+                                    if rowJson.allKeys.count > 0 && valuesArray.count == rowJson.allKeys.count && rowJson.allKeys.count == fieldsArray.count {
+                                        rowsArray.add(rowJson)
+                                    }
+                                }
+                            }
+                        }
+                        
+                        // Set the CSV headers & Values and name in Dictionary.
+                        if fieldsArray.count > 0 && rowsArray.count > 0 {
+                            output.setObject(fieldsArray, forKey: "fields" as NSCopying)
+                            output.setObject(rowsArray, forKey: "rows" as NSCopying)
+                            output.setObject(localPathURL.lastPathComponent, forKey: "name" as NSCopying)
+                        }
+                    }
+                }
+            }
+            catch {
+                /* error handling here */
+                 print("Error while read csv: \(error)", terminator: "")
+            }
+        }
+        return output;
+    }
+    
     ///do the checks and cleanup
     open func cleanup() {
         let path = "\(directory)/\(csvFileName())"
@@ -173,6 +257,14 @@ public func exportCSV(_ filename:String, fields: [String], values: String) -> St
     return "";
 }
 
+///a free function to make read the CSV file
+public func readCSV(_ filePath:String) -> NSMutableDictionary{
+    return CSVExport.export.read(filepath: filePath);
+}
 
+///a free function to make read the CSV file
+public func readCSVFromDefaultPath(_ fileName:String) -> NSMutableDictionary{
+    return CSVExport.export.read(filename: fileName);
+}
 
 
