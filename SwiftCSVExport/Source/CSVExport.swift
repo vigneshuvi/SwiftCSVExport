@@ -152,3 +152,27 @@ public func exportCSV(_ filename:String, fields: NSArray, values: NSArray) -> St
 public func exportCSV(_ filename:String, fields: [String], values: NSArray) -> String{
     return CSVExport.export.exportCSV(filename, fields: fields as NSArray, values: values);
 }
+
+///a free function to make export the CSV file from file name, fields and values
+public func exportCSV(_ filename:String, fields: [String], values: String) -> String{
+    
+    // Convert String into NSArray of objects.
+    if let data = (values as NSString).data(using: String.Encoding.utf8.rawValue)
+    {
+        do {
+            let parsedObject = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.mutableLeaves) as! NSArray
+            if parsedObject.count > 0
+            {
+                return CSVExport.export.exportCSV(filename, fields: fields as NSArray, values: parsedObject);
+            }
+        } catch  {
+            print("error handling...\(error)")
+            return "";
+        }
+    }
+    return "";
+}
+
+
+
+
