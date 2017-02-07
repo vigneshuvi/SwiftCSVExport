@@ -90,7 +90,6 @@ open class CSVExport {
             let key = fieldsArray[i];
             let value = valuesArray[i];
             rowsDictionary.setObject(value, forKey: key as! NSCopying);
-            return rowsDictionary;
         }
         return rowsDictionary;
     }
