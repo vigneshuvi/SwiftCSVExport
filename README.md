@@ -213,6 +213,7 @@ Then run:
 You need to add to dependencies in your 'Package.swift' and fetch Swift module using terminal comment.
 
 // Vapor
+
 dependencies: [
         .Package(url: "https://github.com/vigneshuvi/SwiftCSVExport.git", majorVersion: 1, minor: 0)
         ],
@@ -222,6 +223,7 @@ Then run:
     vapor build || vapor xcode
 
 // Importing header
+
 import SwiftCSVExport
 
 
