@@ -15,6 +15,7 @@
 		0B54EBFE1E499C1B0043976B /* SwiftCSVExportOSXTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B54EBFD1E499C1B0043976B /* SwiftCSVExportOSXTests.swift */; };
 		0B54EC001E499C1B0043976B /* SwiftCSVExportOSX.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B54EBF21E499C1B0043976B /* SwiftCSVExportOSX.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0B54EC071E499C2F0043976B /* CSVExport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B54EBE91E4987FA0043976B /* CSVExport.swift */; };
+		0B69156F1E4DB535007C9394 /* SwiftCSVExport.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B54EBD21E4987A00043976B /* SwiftCSVExport.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -159,6 +160,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0B54EC001E499C1B0043976B /* SwiftCSVExportOSX.h in Headers */,
+				0B69156F1E4DB535007C9394 /* SwiftCSVExport.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -635,6 +637,7 @@
 				0B54EBE51E4987A00043976B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		0B54EBE61E4987A00043976B /* Build configuration list for PBXNativeTarget "SwiftCSVExportTests" */ = {
 			isa = XCConfigurationList;
@@ -643,6 +646,7 @@
 				0B54EBE81E4987A00043976B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		0B54EC011E499C1B0043976B /* Build configuration list for PBXNativeTarget "SwiftCSVExportOSX" */ = {
 			isa = XCConfigurationList;
@@ -651,6 +655,7 @@
 				0B54EC031E499C1B0043976B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		0B54EC041E499C1B0043976B /* Build configuration list for PBXNativeTarget "SwiftCSVExportOSXTests" */ = {
 			isa = XCConfigurationList;
@@ -659,6 +664,7 @@
 				0B54EC061E499C1B0043976B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

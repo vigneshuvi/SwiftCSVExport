@@ -148,7 +148,7 @@ open class CSVExport {
                             }
                         }
                         
-                        // Set the CSV headers & Values and name in Dictionary.
+                        // Set the CSV headers & Values and name in the dict.
                         if fieldsArray.count > 0 && rowsArray.count > 0 {
                             output.setObject(fieldsArray, forKey: "fields" as NSCopying)
                             output.setObject(rowsArray, forKey: "rows" as NSCopying)
