@@ -7,14 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0B2F39981E645A4B0019240C /* CSVExport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B2F39971E645A4B0019240C /* CSVExport.swift */; };
 		0B54EBD91E4987A00043976B /* SwiftCSVExport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B54EBCF1E4987A00043976B /* SwiftCSVExport.framework */; };
 		0B54EBDE1E4987A00043976B /* SwiftCSVExportTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B54EBDD1E4987A00043976B /* SwiftCSVExportTests.swift */; };
 		0B54EBE01E4987A00043976B /* SwiftCSVExport.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B54EBD21E4987A00043976B /* SwiftCSVExport.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		0B54EBEA1E4987FA0043976B /* CSVExport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B54EBE91E4987FA0043976B /* CSVExport.swift */; };
 		0B54EBF91E499C1B0043976B /* SwiftCSVExportOSX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B54EBF01E499C1B0043976B /* SwiftCSVExportOSX.framework */; };
 		0B54EBFE1E499C1B0043976B /* SwiftCSVExportOSXTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B54EBFD1E499C1B0043976B /* SwiftCSVExportOSXTests.swift */; };
 		0B54EC001E499C1B0043976B /* SwiftCSVExportOSX.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B54EBF21E499C1B0043976B /* SwiftCSVExportOSX.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		0B54EC071E499C2F0043976B /* CSVExport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B54EBE91E4987FA0043976B /* CSVExport.swift */; };
 		0B69156F1E4DB535007C9394 /* SwiftCSVExport.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B54EBD21E4987A00043976B /* SwiftCSVExport.h */; };
 /* End PBXBuildFile section */
 
@@ -36,13 +35,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0B2F39971E645A4B0019240C /* CSVExport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CSVExport.swift; path = Sources/CSVExport.swift; sourceTree = SOURCE_ROOT; };
 		0B54EBCF1E4987A00043976B /* SwiftCSVExport.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftCSVExport.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0B54EBD21E4987A00043976B /* SwiftCSVExport.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwiftCSVExport.h; sourceTree = "<group>"; };
 		0B54EBD31E4987A00043976B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0B54EBD81E4987A00043976B /* SwiftCSVExportTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftCSVExportTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0B54EBDD1E4987A00043976B /* SwiftCSVExportTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftCSVExportTests.swift; sourceTree = "<group>"; };
 		0B54EBDF1E4987A00043976B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		0B54EBE91E4987FA0043976B /* CSVExport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CSVExport.swift; path = Source/CSVExport.swift; sourceTree = "<group>"; };
 		0B54EBF01E499C1B0043976B /* SwiftCSVExportOSX.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftCSVExportOSX.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0B54EBF21E499C1B0043976B /* SwiftCSVExportOSX.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwiftCSVExportOSX.h; sourceTree = "<group>"; };
 		0B54EBF31E499C1B0043976B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -85,6 +84,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0B2F39961E645A410019240C /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				0B2F39971E645A4B0019240C /* CSVExport.swift */,
+			);
+			name = Sources;
+			sourceTree = "<group>";
+		};
 		0B54EBC51E4987A00043976B = {
 			isa = PBXGroup;
 			children = (
@@ -110,9 +117,9 @@
 		0B54EBD11E4987A00043976B /* SwiftCSVExport */ = {
 			isa = PBXGroup;
 			children = (
+				0B2F39961E645A410019240C /* Sources */,
 				0B54EBD21E4987A00043976B /* SwiftCSVExport.h */,
 				0B54EBD31E4987A00043976B /* Info.plist */,
-				0B54EBE91E4987FA0043976B /* CSVExport.swift */,
 			);
 			path = SwiftCSVExport;
 			sourceTree = "<group>";
@@ -328,7 +335,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0B54EBEA1E4987FA0043976B /* CSVExport.swift in Sources */,
+				0B2F39981E645A4B0019240C /* CSVExport.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -344,7 +351,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0B54EC071E499C2F0043976B /* CSVExport.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -587,7 +593,6 @@
 		0B54EC051E499C1B0043976B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 7FUQA46NH7;
@@ -604,7 +609,6 @@
 		0B54EC061E499C1B0043976B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 7FUQA46NH7;
