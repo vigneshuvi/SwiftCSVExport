@@ -22,8 +22,8 @@
     <meta name="msapplication-TileImage" content="https://vigneshuvi.github.io/favicon.ico/ms-icon-144x144.png">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="description" content="Swift CSV Export">
+    <meta name="author" content="Vignesh">
 
     <title>Vignesh Kumar - Swift CSV Export Blog</title>
 
@@ -128,7 +128,7 @@
 
                     <h2 class="section-heading">Examples</h2>
                     </br>
-                    <h4>Example 1</h4>
+                    <h4>Example 1 - Able to convert NSMutableDictionary into CSV</h4>
                      <blockquote>
                      <span>// First User Object</span><br/>
                      <span>let user1:NSMutableDictionary = NSMutableDictionary()</span><br/>
@@ -152,8 +152,79 @@
 
                      <span>let filePath:String = SwiftCSVExport.exportCSV("userlist",fields: fields,values: data);</span><br/>
                      <span>print(filePath)</span><br/>
-
                      </blockquote>
+                    </br>
+
+                    <h4>Write Output</h4>
+                     <p>Output: userlist.csv</p>
+                     <blockquote>
+                     <span>name,email</span><br/>
+                     <span>vignesh,vigneshuvi@gmail.com</span><br/>
+                     <span>vinoth,vinoth@gmail.com</span><br/><br/>
+                     </blockquote>
+                     </br>
+
+                    <h4>Example 2 - Able to convert JSON string into CSV.</h4>
+                     <blockquote>
+                     <span>// Able to convert JSON string into CSV.</span><br/>
+                     <span>let string = "[{\"name\":\"vignesh\",\"email\":\"vigneshuvi@gmail.com\"},{\"name\":\"vinoth\",\"email\":\"vinoth@gmail.com\"}]";</span><br/>
+                     <span>let filePath:String = exportCSV("userlist", fields:["name","email"], values:string);</span><br/>
+                     <span>print(filePath)</span><br/><br/>
+
+                     <span>// Read File</span><br/>
+                     <span>let fileDetails = readCSV(filePath);</span><br/>
+
+                     <span>// Use 'SwiftLoggly' pod framework to print the Dictionary/span><br/>
+                     <span>if fileDetails.allKeys.count > 0 {</span><br/>
+                     <span>loggly(LogType.Info, dictionary: fileDetails)</span><br/>
+                     <span>}</span><br/>
+                     </blockquote>
+
+                     <h4>Read Output</h4>
+                     <blockquote>
+                     <span>[💙 Info -  Feb 7, 2017, 4:19:23 PM]: {  </span><br/>
+                     <span>"rows" : [ { "name" : "vignesh", "email" : "vigneshuvi@gmail.com"  },</span><br/>
+                     <span>{"name" : "vinoth", "email" : "vinoth@gmail.com"  } ],</span><br/>
+                     <span>"name" : "userlist.csv",</span><br/>
+                     <span>"fields" : ["name", "email"] }</span><br/>
+                     </blockquote>
+                     </br>
+
+                     <p>That will create a CSV file in the proper directory on both OS X and iOS. </p>
+                     <p>OS X CSV files will be created in the OS X Exports directory (found under: /Library/Exports). The iOS CSV files will be created in your apps document directory under a folder called Exports.</p>
+
+                     <h2 class="section-heading">Configuration</h2> 
+                     <br/>
+                     <blockquote>
+                     <span>//Set the name of the csv file</span><br/>
+                     <span>CSVExport.export.fileName = "Sample" //default is "csvfile"</span><br/>
+                     <span>//Set the directory in which the csv files will be written</span><br/>
+                     <span>CSVExport.export.directory = "/Library/XXX-folder-name-XXX" //default is the standard exporting directory for each platform.</span><br/><br/>
+                     </blockquote>
+                     
+
+                     <h2 class="section-heading">Installation</h2> 
+                      <p>CocoaPods - To use SwiftCSVExport in your project add the following 'Podfile' to your project </p>
+                     <blockquote>
+                     <span>platform :ios, '8.0'</span><br/>
+                     <span>use_frameworks!</span><br/>
+                     <span>pod 'SwiftCSVExport'</span><br/><br/>
+                     <span>Then run:</span><br/>
+                     <span>pod install || pod update</span><br/><br/>
+                     </blockquote>
+
+                     <h2 class="section-heading">Swift Package Manager for Vapor</h2> 
+                      <p>You need to add to dependencies in your 'Package.swift' and fetch Swift module using terminal comment.</p>
+                     <blockquote>
+                     <span>// Vapor</span><br/>
+                     <span>dependencies: [ .Package(url: "https://github.com/vigneshuvi/SwiftCSVExport.git", majorVersion: 1, minor: 0) ]</span><br/><br/>
+                     <span>Then run:</span><br/>
+                     <span>vapor build || vapor xcode </span><br/><br/>
+                     <span>// Importing header</span><br/>
+                     <span>import SwiftCSVExport</span><br/><br/>
+                     </blockquote>
+
+
                 </div>
             </div>
         </div>
