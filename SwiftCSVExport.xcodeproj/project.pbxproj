@@ -14,6 +14,9 @@
 		0B54EBF91E499C1B0043976B /* SwiftCSVExportOSX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B54EBF01E499C1B0043976B /* SwiftCSVExportOSX.framework */; };
 		0B54EBFE1E499C1B0043976B /* SwiftCSVExportOSXTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B54EBFD1E499C1B0043976B /* SwiftCSVExportOSXTests.swift */; };
 		0B54EC001E499C1B0043976B /* SwiftCSVExportOSX.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B54EBF21E499C1B0043976B /* SwiftCSVExportOSX.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0B65EF4E1E696AFB00ED048A /* CSVExport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B2F39971E645A4B0019240C /* CSVExport.swift */; };
+		0B65EF4F1E696AFC00ED048A /* CSVExport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B2F39971E645A4B0019240C /* CSVExport.swift */; };
+		0B65EF501E696AFE00ED048A /* CSVExport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B2F39971E645A4B0019240C /* CSVExport.swift */; };
 		0B69156F1E4DB535007C9394 /* SwiftCSVExport.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B54EBD21E4987A00043976B /* SwiftCSVExport.h */; };
 /* End PBXBuildFile section */
 
@@ -343,6 +346,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0B65EF4F1E696AFC00ED048A /* CSVExport.swift in Sources */,
 				0B54EBDE1E4987A00043976B /* SwiftCSVExportTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -351,6 +355,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0B65EF4E1E696AFB00ED048A /* CSVExport.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -358,6 +363,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0B65EF501E696AFE00ED048A /* CSVExport.swift in Sources */,
 				0B54EBFE1E499C1B0043976B /* SwiftCSVExportOSXTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -593,6 +599,7 @@
 		0B54EC051E499C1B0043976B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 7FUQA46NH7;
@@ -609,6 +616,7 @@
 		0B54EC061E499C1B0043976B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 7FUQA46NH7;

@@ -24,6 +24,17 @@ class SwiftCSVExportOSXTests: XCTestCase {
     func testExample() {
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
+        // This is an example of a functional test case.
+        // Use XCTAssert and related functions to verify your tests produce the correct results.
+        // Able to convert JSON string into CSV.
+        let string = "[{\"name\":\"vignesh\",\"email\":\"vigneshuvi@gmail.com\"},{\"name\":\"vinoth\",\"email\":\"vinoth@gmail.com\"}]";
+        let filePath:String = exportCSV("userlist", fields:["name","email"], values:string);
+        print(filePath)
+        
+        let fileDetails = readCSV(filePath);
+        if fileDetails.allKeys.count > 0 {
+            print(fileDetails)
+        }
     }
     
     func testPerformanceExample() {
