@@ -211,6 +211,20 @@ Then run:
 
     pod install || pod update
 
+### Carthage
+
+
+To use SwiftCSVExport in your project add the following 'Cartfile.private' file to your project
+
+  // Require version 1.x
+  github "vigneshuvi/SwiftCSVExport"
+
+
+
+Then run:
+
+    pod install || pod update
+
 ###Swift Package Manager for Vapor
 
 You need to add to dependencies in your 'Package.swift' and fetch Swift module using terminal comment.

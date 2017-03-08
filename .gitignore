@@ -64,11 +64,13 @@ fastlane/Preview.html
 fastlane/screenshots
 fastlane/test_output
 
-
 Examples/SampleSwift/SampleSwift.xcworkspace/*
 Examples/SampleSwift/xcuserdata
 Examples/SampleSwift/xcodebuild.log
 Examples/SampleSwift/build
 Examples/SampleSwift/Pods/*
+
+Examples/CarthageExport/Carthage/*
+
 *.lock
 *.DS_Store
