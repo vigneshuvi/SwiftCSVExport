@@ -201,11 +201,11 @@ Check out [Get Started](http://cocoapods.org/) tab on [cocoapods.org](http://coc
 
 To use SwiftCSVExport in your project add the following 'Podfile' to your project
 
-	source 'https://github.com/CocoaPods/Specs.git'
-	platform :ios, '8.0'
-	use_frameworks!
+	  source 'https://github.com/CocoaPods/Specs.git'
+	  platform :ios, '8.0'
+	  use_frameworks!
 
-	pod 'SwiftCSVExport'
+	  pod 'SwiftCSVExport'
 
 Then run:
 
@@ -214,16 +214,15 @@ Then run:
 ### Carthage
 
 
-To use SwiftCSVExport in your project add the following 'Cartfile.private' file to your project
+To use SwiftCSVExport in your project create/update 'Cartfile.private' file into your project
 
-  // Require version 1.x
-  github "vigneshuvi/SwiftCSVExport"
-
-
+    // Require version 1.x
+    
+    github "vigneshuvi/SwiftCSVExport"
 
 Then run:
 
-    pod install || pod update
+    carthage update
 
 ###Swift Package Manager for Vapor
 
@@ -238,6 +237,7 @@ dependencies: [
 Then run:
 
     vapor build || vapor xcode
+
 
 // Importing header
 
