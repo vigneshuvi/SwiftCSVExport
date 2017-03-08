@@ -1,3 +1,6 @@
+[![Language Swift 3](https://img.shields.io/badge/Language-Swift%203-orange.svg)](https://developer.apple.com/swift)
+[![Swift Package Manager compatible](https://img.shields.io/badge/Swift%20Package%20Manager-compatible-brightgreen.svg)](https://github.com/apple/swift-package-manager)
+
 # SwiftCSVExport
 Simple way to export csv file with rich feature framework in Swift.
 
