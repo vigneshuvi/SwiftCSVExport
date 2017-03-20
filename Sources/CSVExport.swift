@@ -24,6 +24,9 @@ open class CSVExport {
     //The name of the csv files.
     open var fileName = "csvfile";
     
+    //The CSV encodeing format
+    open var encodingType:String.Encoding = String.Encoding.utf8;
+    
     
     ///export singleton
     open class var export: CSVExport {
@@ -70,14 +73,14 @@ open class CSVExport {
         let fileManager = FileManager.default
         if !fileManager.fileExists(atPath: path) {
             do {
-                try "".write(toFile: path, atomically: true, encoding: String.Encoding.utf8)
+                try "".write(toFile: path, atomically: true, encoding: encodingType)
             } catch _ {
             }
         }
         if let fileHandle = FileHandle(forWritingAtPath: path) {
             let writeText = "\(text)\n"
             fileHandle.seekToEndOfFile()
-            fileHandle.write(writeText.data(using: String.Encoding.utf8)!)
+            fileHandle.write(writeText.data(using: encodingType)!)
             fileHandle.closeFile()
             print(writeText, terminator: "")
             
@@ -122,7 +125,7 @@ open class CSVExport {
                 let localPathURL: URL = NSURL.fileURL(withPath: filePath);
                 
                 // Read the content from Local Path
-                let csvText = try String(contentsOf: localPathURL, encoding: String.Encoding.utf8);
+                let csvText = try String(contentsOf: localPathURL, encoding: encodingType);
                 
                 // Check the csv count
                 if csvText.characters.count > 0 {
@@ -238,7 +241,7 @@ public func exportCSV(_ filename:String, fields: [String], values: NSArray) -> S
 public func exportCSV(_ filename:String, fields: [String], values: String) -> String{
     
     // Convert String into NSArray of objects.
-    if let data = (values as NSString).data(using: String.Encoding.utf8.rawValue)
+    if let data = (values as NSString).data(using: CSVExport.export.encodingType.rawValue)
     {
         do {
             let parsedObject = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.mutableLeaves) as! NSArray

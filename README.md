@@ -12,6 +12,7 @@ Simple way to export csv file with rich feature framework in Swift.
 - Able to convert JSON string into CSV.
 - Able to Read the CSV file and convert to NSDictionary.
 - Support CocoaPods, mac OS and Vapor framework(Swift Package Manager).
+- Able to encoding CSV based on String.Encoding Type(utf8, ascii, unicode, utf16, etc) Refer: String.Encoding.
 
 ##iOS/MacOS import headers
 
@@ -225,7 +226,7 @@ Then run:
 
     carthage update
 
-###Swift Package Manager for Vapor
+### Swift Package Manager for Vapor
 
 You need to add to dependencies in your 'Package.swift' and fetch Swift module using terminal comment.
 
