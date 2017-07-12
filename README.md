@@ -38,15 +38,41 @@ import SwiftCSVExportOSX
 
 ```swift
 
-// Log Dictionary
+// First User Object
 NSMutableDictionary *user1 = [NSMutableDictionary new];
-[user1 setValue:@"vinoth" forKey:@"name" ];
-[user1 setValue:@"vignesh@gmail.com" forKey: @"email"];
- [[Loggly logger] logglyWarningsWithDictionary:user1];
+[user1 setValue:@"vignesh" forKey:@"name" ];
+[user1 setValue:@"vigneshuvi@gmail.com" forKey: @"email"];
 
-// Log string
-NSString *jsonString  = @"[{\"name\":\"vignesh\",\"email\":\"vigneshuvi@gmail.com\"},{\"name\":\"vinoth\",\"email\":\"vinoth@gmail.com\"}]";
-[[Loggly logger] logglyInfoWithText:jsonString];
+
+// Secound User Object
+NSMutableDictionary *user2 = [NSMutableDictionary new];
+[user2 setValue:@"vinoth" forKey:@"name" ];
+[user2 setValue:@"vigneshuvi@gmail.com" forKey: @"email"];
+
+
+// CSV fields Array
+NSMutableArray *fields = [NSMutableArray new];
+[fields addObject:@"name"];
+[fields addObject:@"email"];
+
+// CSV rows Array
+NSMutableArray *data = [NSMutableArray new];
+[data addObject:user1];
+[data addObject:user2];
+
+
+NSString *userpath = [[CSVExport export] exportCSV:@"userlist1" fields:fields values:data];
+NSLog(@"%@",userpath);
+
+NSString *namepath =   [[CSVExport export] exportCSV:@"userlist1" fields:@[@"name", @"email"] values:data];
+NSLog(@"%@",namepath);
+
+
+// Able to convert JSON string into CSV.
+NSString *string  = @"[{\"name\":\"vignesh\",\"email\":\"vigneshuvi@gmail.com\"},{\"name\":\"vinoth\",\"email\":\"vinoth@gmail.com\"}]";
+NSString *filePath   = [[CSVExport export] exportCSVString:@"userlist1"fields:fields values:string];
+
+NSLog(@"%@",filePath);
 
 ```
 
