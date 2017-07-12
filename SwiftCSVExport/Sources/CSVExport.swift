@@ -16,7 +16,7 @@ extension String {
 }
 
 //MARK: -  CSVExport Class
-open class CSVExport {
+@objc open class CSVExport:NSObject {
     
     ///The directory in which the cvs files will be written
     open var directory = CSVExport.defaultDirectory();
@@ -37,9 +37,19 @@ open class CSVExport {
         return Static.instance
     }
     
+    ///a free function to make read the CSV file
+    open func readCSV(_ filePath:String) -> NSMutableDictionary{
+        return CSVExport.export.read(filepath: filePath);
+    }
+    
+    ///a free function to make read the CSV file
+    open func readCSVFromDefaultPath(_ fileName:String) -> NSMutableDictionary{
+        return CSVExport.export.read(filename: fileName);
+    }
+    
     ///write content to the current csv file.
     open func getFilePath() -> String{
-        let path = "\(directory)/\(csvFileName())"
+        let path = "\(directory)/\(self.csvFileName())"
         let fileManager = FileManager.default
         if !fileManager.fileExists(atPath: path) {
             return "";
@@ -65,11 +75,31 @@ open class CSVExport {
         }
         return "";
     }
+    
+    ///a free function to make export the CSV file from file name, fields and values
+    open  func exportCSVString(_ filename:String, fields: [String], values: String) -> String{
+        
+        // Convert String into NSArray of objects.
+        if let data = (values as NSString).data(using: CSVExport.export.encodingType.rawValue)
+        {
+            do {
+                let parsedObject = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.mutableLeaves) as! NSArray
+                if parsedObject.count > 0
+                {
+                    return CSVExport.export.exportCSV(filename, fields: fields as NSArray, values: parsedObject);
+                }
+            } catch  {
+                print("error handling...\(error)")
+                return "";
+            }
+        }
+        return "";
+    }
 
     
     ///write content to the current csv file.
     open func write(text: String) {
-        let path = "\(directory)/\(csvFileName())"
+        let path = "\(directory)/\(self.csvFileName())"
         let fileManager = FileManager.default
         if !fileManager.fileExists(atPath: path) {
             do {
@@ -170,11 +200,11 @@ open class CSVExport {
     
     ///do the checks and cleanup
     open func cleanup() {
-        let path = "\(directory)/\(csvFileName())"
-        let size = fileSize(path)
+        let path = "\(directory)/\(self.csvFileName())"
+        let size = self.fileSize(path)
         if size > 0 {
             //delete the oldest file
-            let deletePath = "\(directory)/\(csvFileName())"
+            let deletePath = "\(directory)/\(self.csvFileName())"
             let fileManager = FileManager.default
             do {
                 try fileManager.removeItem(atPath: deletePath)
@@ -184,7 +214,7 @@ open class CSVExport {
     }
     
     ///check the size of a file
-    func fileSize(_ path: String) -> UInt64 {
+    open func fileSize(_ path: String) -> UInt64 {
         let fileManager = FileManager.default
         if fileManager.fileExists(atPath: path) {
             let attrs: NSDictionary? = try! fileManager.attributesOfItem(atPath: path) as NSDictionary?
@@ -255,32 +285,17 @@ public func exportCSV(_ filename:String, fields: [String], values: [[String:Any]
 
 ///a free function to make export the CSV file from file name, fields and values
 public func exportCSV(_ filename:String, fields: [String], values: String) -> String{
-    
-    // Convert String into NSArray of objects.
-    if let data = (values as NSString).data(using: CSVExport.export.encodingType.rawValue)
-    {
-        do {
-            let parsedObject = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.mutableLeaves) as! NSArray
-            if parsedObject.count > 0
-            {
-                return CSVExport.export.exportCSV(filename, fields: fields as NSArray, values: parsedObject);
-            }
-        } catch  {
-            print("error handling...\(error)")
-            return "";
-        }
-    }
-    return "";
+     return CSVExport.export.exportCSVString(filename, fields: (fields as NSArray) as! [String], values: values);
 }
 
 ///a free function to make read the CSV file
 public func readCSV(_ filePath:String) -> NSMutableDictionary{
-    return CSVExport.export.read(filepath: filePath);
+    return CSVExport.export.readCSV(filePath);
 }
 
 ///a free function to make read the CSV file
 public func readCSVFromDefaultPath(_ fileName:String) -> NSMutableDictionary{
-    return CSVExport.export.read(filename: fileName);
+    return CSVExport.export.readCSVFromDefaultPath(fileName);
 }
 
 
