@@ -3,7 +3,7 @@
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 
 # SwiftCSVExport
-Simple way to export csv file with rich feature framework in Swift.
+Simple way to export csv file with rich feature framework and written in Swift. It supports both Objective-C and Swift projects.
 
 ## Features
 
@@ -19,7 +19,11 @@ Simple way to export csv file with rich feature framework in Swift.
 First thing is to import the framework. See the Installation instructions on how to add the framework to your project.
 
 ```swift
-//iOS
+
+//iOS - Objective-C
+@import SwiftCSVExport;
+
+//iOS - Swift
 import SwiftCSVExport
 
 //macOS
@@ -30,7 +34,50 @@ import SwiftCSVExportOSX
 
 ## Examples:
 
-### Example 1
+### Example 1 - Objective-C
+
+```swift
+
+// First User Object
+NSMutableDictionary *user1 = [NSMutableDictionary new];
+[user1 setValue:@"vignesh" forKey:@"name" ];
+[user1 setValue:@"vigneshuvi@gmail.com" forKey: @"email"];
+
+
+// Secound User Object
+NSMutableDictionary *user2 = [NSMutableDictionary new];
+[user2 setValue:@"vinoth" forKey:@"name" ];
+[user2 setValue:@"vigneshuvi@gmail.com" forKey: @"email"];
+
+
+// CSV fields Array
+NSMutableArray *fields = [NSMutableArray new];
+[fields addObject:@"name"];
+[fields addObject:@"email"];
+
+// CSV rows Array
+NSMutableArray *data = [NSMutableArray new];
+[data addObject:user1];
+[data addObject:user2];
+
+
+NSString *userpath = [[CSVExport export] exportCSV:@"userlist1" fields:fields values:data];
+NSLog(@"%@",userpath);
+
+NSString *namepath =   [[CSVExport export] exportCSV:@"userlist1" fields:@[@"name", @"email"] values:data];
+NSLog(@"%@",namepath);
+
+
+// Able to convert JSON string into CSV.
+NSString *string  = @"[{\"name\":\"vignesh\",\"email\":\"vigneshuvi@gmail.com\"},{\"name\":\"vinoth\",\"email\":\"vinoth@gmail.com\"}]";
+NSString *filePath   = [[CSVExport export] exportCSVString:@"userlist1"fields:fields values:string];
+
+NSLog(@"%@",filePath);
+
+```
+
+### Example 2 - Swift
+
 ```swift
 
 // First User Object
@@ -58,7 +105,7 @@ print(filePath)
 
 ```
 
-### Example 2
+### Example 3 - Swift
 ```swift
 
 
@@ -82,7 +129,7 @@ print(filePath)
 
 ```
 
-### Example 2
+### Example 4  - Swift
 ```swift
 
 
@@ -104,7 +151,7 @@ print(filePath)
 
 ```
 
-### Example 3
+### Example 5  - Swift
 
 ```swift
 
@@ -136,7 +183,7 @@ vinoth,vinoth@gmail.com
 
 ```
 
-### Example 4
+### Example 6  - Swift
 
 ```swift
 
