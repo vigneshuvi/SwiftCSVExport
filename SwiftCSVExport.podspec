@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "SwiftCSVExport"
-  s.version      = "1.0.3"
+  s.version      = "1.0.4"
   s.summary      = "Simple way to export csv file with rich feature framework and written in Swift 3."
 
   # This description is used to generate tags and improve search results.
