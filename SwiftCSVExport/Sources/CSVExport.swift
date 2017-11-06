@@ -13,6 +13,11 @@ extension String {
     var length: Int {
         return self.characters.count
     }
+    
+    func stringByAppendingPathComponent(path: String) -> String {
+        let nsSt = self as NSString
+        return nsSt.appendingPathComponent(path)
+    }
 }
 
 //MARK: -  CSVExport Class
@@ -67,8 +72,25 @@ extension String {
             let  result:String = fields.componentsJoined(by: ",");
             CSVExport.export.write( text: result)
             for dict in values {
-                let values = (dict as! NSDictionary).allValues as NSArray;
-                let  result:String = values.componentsJoined(by: ",");
+                let dictionary = (dict as! NSDictionary);
+                var result = ""
+                for key in fields {
+                    if let value = dictionary.object(forKey: key) {
+                        if result.characters.count == 0 {
+                            result = "\(value)"
+                        } else {
+                            result = "\(result),\(value)"
+                        }
+                        
+                    } else {
+                        if result.characters.count == 0 {
+                            result = "\("")"
+                        } else {
+                            result = "\(result),\("")"
+                        }
+                        
+                    }
+                }
                 CSVExport.export.write( text: result)
             }
             return CSVExport.export.getFilePath();
@@ -95,12 +117,15 @@ extension String {
         }
         return "";
     }
-
+    
     
     ///write content to the current csv file.
     open func write(text: String) {
         let path = "\(directory)/\(self.csvFileName())"
         let fileManager = FileManager.default
+        let updatedString = text.replacingOccurrences(of: "\n", with: "0x0a").replacingOccurrences(of: "\t", with: "0x09").replacingOccurrences(of: "\r", with: "0x0d")
+        
+        
         if !fileManager.fileExists(atPath: path) {
             do {
                 try "".write(toFile: path, atomically: true, encoding: encodingType)
@@ -108,7 +133,7 @@ extension String {
             }
         }
         if let fileHandle = FileHandle(forWritingAtPath: path) {
-            let writeText = "\(text)\n"
+            let writeText = "\(updatedString)\n"
             fileHandle.seekToEndOfFile()
             fileHandle.write(writeText.data(using: encodingType)!)
             fileHandle.closeFile()
@@ -192,7 +217,7 @@ extension String {
             }
             catch {
                 /* error handling here */
-                 print("Error while read csv: \(error)", terminator: "")
+                print("Error while read csv: \(error)", terminator: "")
             }
         }
         return output;
@@ -285,7 +310,7 @@ public func exportCSV(_ filename:String, fields: [String], values: [[String:Any]
 
 ///a free function to make export the CSV file from file name, fields and values
 public func exportCSV(_ filename:String, fields: [String], values: String) -> String{
-     return CSVExport.export.exportCSVString(filename, fields: (fields as NSArray) as! [String], values: values);
+    return CSVExport.export.exportCSVString(filename, fields: (fields as NSArray) as! [String], values: values);
 }
 
 ///a free function to make read the CSV file
@@ -297,5 +322,3 @@ public func readCSV(_ filePath:String) -> NSMutableDictionary{
 public func readCSVFromDefaultPath(_ fileName:String) -> NSMutableDictionary{
     return CSVExport.export.readCSVFromDefaultPath(fileName);
 }
-
-

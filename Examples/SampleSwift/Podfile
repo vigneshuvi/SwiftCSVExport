@@ -6,7 +6,7 @@ target 'SampleSwift' do
   use_frameworks!
 
   pod 'SwiftLoggly’
-  pod 'SwiftCSVExport'
+  pod 'SwiftCSVExport', :git => 'https://github.com/vigneshuvi/SwiftCSVExport.git', :tag => '1.0.4'
 
   # Pods for SampleSwift
 
