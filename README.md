@@ -14,6 +14,7 @@ Simple way to export csv file with rich feature framework and written in Swift. 
 - Support CocoaPods, mac OS and Vapor framework(Swift Package Manager).
 - Able to encoding CSV based on String.Encoding Type(utf8, ascii, unicode, utf16, etc) Refer: String.Encoding.
 - Able to view the exported CSV documents in iOS Files app by enabling the configuration in your project.
+- Handled the punctuation(\n, \t, \t, and ,) characters in CSV file.
 
 
 ## iOS/MacOS import headers
@@ -129,18 +130,20 @@ print(filePath)
 let user1:NSMutableDictionary = NSMutableDictionary()
 user1.setObject("vignesh", forKey: "name" as NSCopying);
 user1.setObject("vigneshuvi@gmail.com", forKey: "email" as NSCopying);
+user1.setObject("Hi Vignesh, \nhow are you? \t Shall we meet tomorrow? \r Thanks ", forKey: "address" as NSCopying);
 
 // Secound User Object
 let user2:NSMutableDictionary = NSMutableDictionary()
 user2.setObject("vinoth", forKey: "name" as NSCopying);
 user2.setObject("vinoth@gmail.com", forKey: "email" as NSCopying);
+user2.setObject("Hi Vinoth, \nHow are you? \t Shall we meet tomorrow? \r Thanks ", forKey: "address" as NSCopying);
 
 // Add dictionary into rows of CSV Array
 let data:NSMutableArray  = NSMutableArray()
 data.add(user1);
 data.add(user2);
 
-let filePath:String = SwiftCSVExport.exportCSV("userlist",fields: ["name", "email"],values: data);
+let filePath:String = SwiftCSVExport.exportCSV("userlist",fields: ["name", "email", "address"],values: data);
 print(filePath)
 
 ```

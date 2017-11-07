@@ -76,13 +76,23 @@ extension String {
                 var result = ""
                 for key in fields {
                     if let value = dictionary.object(forKey: key) {
-                        if result.characters.count == 0 {
-                            result = "\(value)"
+                        if let string = value as? String {
+                            // obj is a String. Do something with str
+                            if result.characters.count == 0 {
+                                result = "\"\(string)\""
+                            } else {
+                                result = "\(result),\"\(string)\""
+                            }
                         } else {
-                            result = "\(result),\(value)"
+                            if result.characters.count == 0 {
+                                result = "\(value)"
+                            } else {
+                                result = "\(result),\(value)"
+                            }
                         }
                         
                     } else {
+                        
                         if result.characters.count == 0 {
                             result = "\("")"
                         } else {
@@ -123,7 +133,7 @@ extension String {
     open func write(text: String) {
         let path = "\(directory)/\(self.csvFileName())"
         let fileManager = FileManager.default
-        let updatedString = text.replacingOccurrences(of: "\n", with: "").replacingOccurrences(of: "\t", with: "").replacingOccurrences(of: "\r", with: "")
+        let updatedString = text.replacingOccurrences(of: "\n", with: "\\n").replacingOccurrences(of: "\t", with: "\\t").replacingOccurrences(of: "\r", with: "\\r")
         
         
         if !fileManager.fileExists(atPath: path) {
