@@ -13,6 +13,8 @@ Simple way to export csv file with rich feature framework and written in Swift. 
 - Able to Read the CSV file and convert to NSDictionary.
 - Support CocoaPods, mac OS and Vapor framework(Swift Package Manager).
 - Able to encoding CSV based on String.Encoding Type(utf8, ascii, unicode, utf16, etc) Refer: String.Encoding.
+- Able to view the exported CSV documents in iOS Files app by enabling the configuration in your project.
+
 
 ##iOS/MacOS import headers
 
@@ -30,6 +32,20 @@ import SwiftCSVExport
 import SwiftCSVExportOSX
 
 ```
+
+## Configuration
+- Able to view CSV exported CSV documents in iOS Files app.
+
+
+```swift
+
+Bundle display name - "APPLICATION NAME"
+Application requires iPhone environment - YES
+Supports opening documents in place - YES
+Application supports iTunes file sharing - YES
+
+```
+
 
 
 ## Examples:
