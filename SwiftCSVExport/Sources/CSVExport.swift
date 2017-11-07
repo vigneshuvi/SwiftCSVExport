@@ -123,7 +123,7 @@ extension String {
     open func write(text: String) {
         let path = "\(directory)/\(self.csvFileName())"
         let fileManager = FileManager.default
-        let updatedString = text.replacingOccurrences(of: "\n", with: "0x0a").replacingOccurrences(of: "\t", with: "0x09").replacingOccurrences(of: "\r", with: "0x0d")
+        let updatedString = text.replacingOccurrences(of: "\n", with: "").replacingOccurrences(of: "\t", with: "").replacingOccurrences(of: "\r", with: "")
         
         
         if !fileManager.fileExists(atPath: path) {
