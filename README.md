@@ -16,7 +16,7 @@ Simple way to export csv file with rich feature framework and written in Swift. 
 - Able to view the exported CSV documents in iOS Files app by enabling the configuration in your project.
 
 
-##iOS/MacOS import headers
+## iOS/MacOS import headers
 
 First thing is to import the framework. See the Installation instructions on how to add the framework to your project.
 
@@ -34,7 +34,7 @@ import SwiftCSVExportOSX
 ```
 
 ## Configuration
-- Able to view CSV exported CSV documents in iOS Files app.
+- Add following keys in your project .plist file to view CSV exported CSV documents in iOS Files app.
 
 
 ```swift
