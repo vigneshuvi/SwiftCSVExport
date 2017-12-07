@@ -11,7 +11,7 @@ import Foundation
 //MARK: -  Extension for String to find length
 extension String {
     var length: Int {
-        return self.characters.count
+        return self.count
     }
     
     func stringByAppendingPathComponent(path: String) -> String {
