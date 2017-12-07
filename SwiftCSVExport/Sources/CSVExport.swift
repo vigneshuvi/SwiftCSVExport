@@ -82,6 +82,7 @@ extension String {
             for dict in values {
                 let dictionary = (dict as! NSDictionary);
                 var result = ""
+                let div: String = self.divider?.rawValue ?? ","
                 for key in fields {
                     if let value = dictionary.object(forKey: key) {
                         if let string = value as? String {
@@ -89,13 +90,13 @@ extension String {
                             if result.count == 0 {
                                 result = "\"\(string)\""
                             } else {
-                                result = "\(result),\"\(string)\""
+                                result = "\(result)\(div)\"\(string)\""
                             }
                         } else {
                             if result.count == 0 {
                                 result = "\(value)"
                             } else {
-                                result = "\(result),\(value)"
+                                result = "\(result)\(div)\(value)"
                             }
                         }
                         
@@ -104,7 +105,7 @@ extension String {
                         if result.count == 0 {
                             result = "\("")"
                         } else {
-                            result = "\(result),\("")"
+                            result = "\(result)\(div)\("")"
                         }
                         
                     }
