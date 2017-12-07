@@ -8,6 +8,11 @@
 
 import Foundation
 
+public enum DividerType: String {
+    case comma = ","
+    case semicolon = ";"
+}
+
 //MARK: -  Extension for String to find length
 extension String {
     var length: Int {
@@ -31,6 +36,9 @@ extension String {
     
     //The CSV encodeing format
     open var encodingType:String.Encoding = String.Encoding.utf8;
+    
+    //The CSV cell separator
+    open var divider: DividerType?
     
     
     ///export singleton
@@ -69,7 +77,7 @@ extension String {
         }
         CSVExport.export.cleanup();
         if fields.count > 0 && values.count > 0 {
-            let  result:String = fields.componentsJoined(by: ",");
+            let  result:String = fields.componentsJoined(by: divider?.rawValue ?? ",");
             CSVExport.export.write( text: result)
             for dict in values {
                 let dictionary = (dict as! NSDictionary);
@@ -78,13 +86,13 @@ extension String {
                     if let value = dictionary.object(forKey: key) {
                         if let string = value as? String {
                             // obj is a String. Do something with str
-                            if result.characters.count == 0 {
+                            if result.count == 0 {
                                 result = "\"\(string)\""
                             } else {
                                 result = "\(result),\"\(string)\""
                             }
                         } else {
-                            if result.characters.count == 0 {
+                            if result.count == 0 {
                                 result = "\(value)"
                             } else {
                                 result = "\(result),\(value)"
@@ -93,7 +101,7 @@ extension String {
                         
                     } else {
                         
-                        if result.characters.count == 0 {
+                        if result.count == 0 {
                             result = "\("")"
                         } else {
                             result = "\(result),\("")"
@@ -163,7 +171,7 @@ extension String {
     }
     
     func splitUsingDelimiter(_ string: String, separatedBy: String) -> NSArray {
-        if string.characters.count > 0 {
+        if string.count > 0 {
             return string.components(separatedBy: separatedBy) as NSArray;
         }
         return [];
@@ -193,7 +201,7 @@ extension String {
                 let csvText = try String(contentsOf: localPathURL, encoding: encodingType);
                 
                 // Check the csv count
-                if csvText.characters.count > 0 {
+                if csvText.count > 0 {
                     
                     // Split based on Newline delimiter
                     let csvArray = self.splitUsingDelimiter(csvText, separatedBy: "\n") as NSArray
@@ -203,10 +211,10 @@ extension String {
                         for row in csvArray {
                             // Get the CSV headers
                             if((row as! String).contains(csvArray[0] as! String)) {
-                                fieldsArray = self.splitUsingDelimiter(row as! String, separatedBy: ",") as NSArray;
+                                fieldsArray = self.splitUsingDelimiter(row as! String, separatedBy: divider?.rawValue ?? ",") as NSArray;
                             } else {
                                 // Get the CSV values
-                                let valuesArray = self.splitUsingDelimiter(row as! String, separatedBy: ",") as NSArray;
+                                let valuesArray = self.splitUsingDelimiter(row as! String, separatedBy: divider?.rawValue ?? ",") as NSArray;
                                 if valuesArray.count == fieldsArray.count  && valuesArray.count > 0{
                                     let rowJson:NSMutableDictionary = self.generateDict(fieldsArray, valuesArray: valuesArray)
                                     if rowJson.allKeys.count > 0 && valuesArray.count == rowJson.allKeys.count && rowJson.allKeys.count == fieldsArray.count {
