@@ -41,8 +41,16 @@ class ViewController: UIViewController {
         data.add(user1);
         data.add(user2);
         
-        let filePath:String = SwiftCSVExport.exportCSV("userlist",fields: ["name", "email", "address"],values: data);
+        // Create a object for write CSV
+        let writeCSVObj = CSV()
+        writeCSVObj.rows = data
+        writeCSVObj.fields = ["name", "email", "address"]
+        writeCSVObj.name = "userlist"
+        
+        // Write File using CSV class object
+        let filePath:String = SwiftCSVExport.exportCSV(writeCSVObj);
         print(filePath)
+
         
         let request = NSURLRequest(url:  URL(fileURLWithPath: filePath) )
         webview.loadRequest(request as URLRequest)
@@ -53,6 +61,11 @@ class ViewController: UIViewController {
             loggly(LogType.Info, dictionary: fileDetails)
         }
         
+        // Read File in Object Oriented Way
+        let readCSVObj = readCSVObject(filePath);
+        
+        // Use 'SwiftLoggly' pod framework to print the Dictionary
+        loggly(LogType.Info, text: readCSVObj.name)
         
     }
     

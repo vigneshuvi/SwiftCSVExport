@@ -34,10 +34,15 @@ class SwiftCSVExportTests: XCTestCase {
         let path:String = SwiftCSVExport.exportCSV("numberList",fields: fields,values: numberArray);
         print(path)
         
+        // Read CSV as NSMutableDictionary object
         let numberDetails = readCSV(path);
         if numberDetails.allKeys.count > 0 {
             print(numberDetails)
         }
+        
+        // Read CSV as CSV class object
+        let csvObj = readCSVObject(path);
+        loggly(LogType.Info, text: csvObj.name)
     }
     
     func testPerformanceExample() {

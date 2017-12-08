@@ -11,6 +11,7 @@ Simple way to export csv file with rich feature framework and written in Swift. 
 - Able to set CSV headers using fields.
 - Able to convert JSON string into CSV.
 - Able to Read the CSV file and convert to NSDictionary.
+- Able to Read the CSV file and convert to CSV class(Object Oriented Approach).
 - Support CocoaPods, mac OS and Vapor framework(Swift Package Manager).
 - Able to encoding CSV based on String.Encoding Type(utf8, ascii, unicode, utf16, etc) Refer: String.Encoding.
 - Able to view the exported CSV documents in iOS Files app by enabling the configuration in your project.
@@ -239,6 +240,53 @@ if fileDetails.allKeys.count > 0 {
   ]
 }
 
+
+```
+
+### Example 7  - Swift - Object Oriented Approach
+
+```swift
+
+// Generate CSV file
+let user1:NSMutableDictionary = NSMutableDictionary()
+user1.setObject("vignesh", forKey: "name" as NSCopying);
+user1.setObject("vigneshuvi@gmail.com", forKey: "email" as NSCopying);
+user1.setObject("Hi Vignesh, \nhow are you? \t Shall we meet tomorrow? \r Thanks ", forKey: "address" as NSCopying);
+
+let user2:NSMutableDictionary = NSMutableDictionary()
+user2.setObject("vinoth", forKey: "name" as NSCopying);
+user2.setObject("vinoth@gmail.com", forKey: "email" as NSCopying);
+user2.setObject("Hi Vinoth, \nHow are you? \t Shall we meet tomorrow? \r Thanks ", forKey: "address" as NSCopying);
+
+
+let data:NSMutableArray  = NSMutableArray()
+data.add(user1);
+data.add(user2);
+
+// Create a object for write CSV
+let writeCSVObj = CSV()
+writeCSVObj.rows = data
+writeCSVObj.fields = ["name", "email", "address"]
+writeCSVObj.name = "userlist"
+
+// Write File using CSV class object
+let filePath:String = SwiftCSVExport.exportCSV(writeCSVObj);
+print(filePath)
+
+// Read File in Object Oriented Way
+let readCSVObj = readCSVObject(filePath);
+
+// Use 'SwiftLoggly' pod framework to print the Dictionary
+loggly(LogType.Info, text: readCSVObj.name)
+
+
+```
+
+### Write Output:
+
+```swift
+
+Output: userlist
 
 ```
 

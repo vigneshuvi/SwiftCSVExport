@@ -14,11 +14,11 @@ public enum DividerType: String {
     case semicolon = ";"
 }
 
-@objc open class CSV:NSObject {
-    var fields:NSArray = []
-    var rows:NSArray = []
-    var name:String = ""
-    var delimiter:String = DividerType.comma.rawValue
+@objc public class CSV:NSObject {
+    open var fields:NSArray = []
+    open var rows:NSArray = []
+    open var name:String = ""
+    open var delimiter:String = DividerType.comma.rawValue
 }
 
 //MARK: -  Extension for String to find length
@@ -28,6 +28,21 @@ extension String {
         var result: [String] = []
         enumerateLines { line, _ in result.append(line) }
         return result
+    }
+    
+    func split(regex pattern: String) -> [String] {
+        
+        guard let re = try? NSRegularExpression(pattern: pattern, options: [])
+            else { return [] }
+        
+        let nsString = self as NSString // needed for range compatibility
+        let stop = "<SomeStringThatYouDoNotExpectToOccurInSelf>"
+        let modifiedString = re.stringByReplacingMatches(
+            in: self,
+            options: [],
+            range: NSRange(location: 0, length: nsString.length),
+            withTemplate: stop)
+        return modifiedString.components(separatedBy: stop)
     }
     
     var length: Int {
@@ -227,9 +242,10 @@ extension String {
         return rowsDictionary;
     }
     
-    func splitUsingDelimiter(_ string: String, separatedBy: String) -> NSArray {
+    func splitUsingDelimiter(_ string: String, separatedBy: String) -> [String] {
         if string.length > 0 {
-            return string.components(separatedBy: separatedBy) as NSArray;
+            let t1 = string.components(separatedBy: separatedBy) as [String];
+            return t1.filter{ !$0.isEmpty }
         }
         return [];
     }
@@ -261,8 +277,7 @@ extension String {
                 if csvText.length > 0 {
                     
                     // Split based on Newline delimiter
-                    //let csvArray = self.splitUsingDelimiter(csvText, separatedBy: "\n") as NSArray
-                    let csvArray = csvText.lines
+                    let csvArray:[String] = self.splitUsingDelimiter(csvText, separatedBy: "\n")
                     if csvArray.count >= 2 {
                         var fieldsArray:NSArray = [];
                         let rowsArray:NSMutableArray  = NSMutableArray()
@@ -273,9 +288,9 @@ extension String {
                                 fieldsArray = self.splitUsingDelimiter(row, separatedBy: div) as NSArray;
                             } else {
                                 // Get the CSV values
-                                let valuesArray = self.splitUsingDelimiter(row, separatedBy: div) as NSArray;
+                                let valuesArray = self.splitUsingDelimiter(row, separatedBy: "\"\(div)") as NSArray;
                                 if valuesArray.count == fieldsArray.count  && valuesArray.count > 0{
-                                    let rowJson:NSMutableDictionary = self.generateDict(fieldsArray, valuesArray: valuesArray)
+                                    let rowJson:NSMutableDictionary = self.generateDict(fieldsArray, valuesArray: valuesArray as NSArray)
                                     if rowJson.allKeys.count > 0 && valuesArray.count == rowJson.allKeys.count && rowJson.allKeys.count == fieldsArray.count {
                                         rowsArray.add(rowJson)
                                     }
