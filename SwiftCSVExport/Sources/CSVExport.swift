@@ -8,15 +8,35 @@
 
 import Foundation
 
+//MARK: -  Divider type enumeration
 public enum DividerType: String {
     case comma = ","
     case semicolon = ";"
 }
 
+@objc open class CSV:NSObject {
+    var fields:NSArray = []
+    var rows:NSArray = []
+    var name:String = ""
+    var delimiter:String = DividerType.comma.rawValue
+}
+
 //MARK: -  Extension for String to find length
 extension String {
+    // Get lines split by Newline delimiter.
+    var lines: [String] {
+        var result: [String] = []
+        enumerateLines { line, _ in result.append(line) }
+        return result
+    }
+    
     var length: Int {
         return self.count
+    }
+    
+    // Replace the escape characters
+    func replaceEscapeCharacters() -> String {
+        return self.replacingOccurrences(of: "\n", with: "\\n").replacingOccurrences(of: "\t", with: "\\t").replacingOccurrences(of: "\r", with: "\\r")
     }
     
     func stringByAppendingPathComponent(path: String) -> String {
@@ -50,9 +70,45 @@ extension String {
         return Static.instance
     }
     
+    // Get Divider character
+    func getDividerCharacter( ) -> String {
+        return divider?.rawValue ?? ",";
+    }
+    
     ///a free function to make read the CSV file
     open func readCSV(_ filePath:String) -> NSMutableDictionary{
         return CSVExport.export.read(filepath: filePath);
+    }
+    
+    ///a free function to convert from NSMutableDictionary to CSV object
+    open func converToObject(_ fileDetails:NSMutableDictionary) -> CSV{
+        let csvObj = CSV()
+        if fileDetails.allKeys.count > 0 {
+            let keys:[String] = fileDetails.allKeys as! [String]
+            for key in keys  {
+                switch key {
+                case "fields":
+                    let fieldValue = fileDetails.object(forKey: key) as! NSArray
+                    csvObj.fields = fieldValue
+                    break
+                case "rows":
+                    let fieldValue = fileDetails.object(forKey: key) as! NSArray
+                    csvObj.rows = fieldValue
+                    break
+                case "name":
+                    let fieldValue = fileDetails.object(forKey: key) as! String
+                    csvObj.name = fieldValue
+                    break
+                case "divider":
+                    let fieldValue = fileDetails.object(forKey: key) as! String
+                    csvObj.delimiter = fieldValue
+                    break
+                default:
+                    break
+                }
+            }
+        }
+        return csvObj;
     }
     
     ///a free function to make read the CSV file
@@ -77,23 +133,23 @@ extension String {
         }
         CSVExport.export.cleanup();
         if fields.count > 0 && values.count > 0 {
-            let  result:String = fields.componentsJoined(by: divider?.rawValue ?? ",");
+            let div = self.getDividerCharacter()
+            let  result:String = fields.componentsJoined(by: div);
             CSVExport.export.write( text: result)
             for dict in values {
                 let dictionary = (dict as! NSDictionary);
                 var result = ""
-                let div: String = self.divider?.rawValue ?? ","
                 for key in fields {
                     if let value = dictionary.object(forKey: key) {
                         if let string = value as? String {
                             // obj is a String. Do something with str
-                            if result.count == 0 {
+                            if result.length == 0 {
                                 result = "\"\(string)\""
                             } else {
                                 result = "\(result)\(div)\"\(string)\""
                             }
                         } else {
-                            if result.count == 0 {
+                            if result.length == 0 {
                                 result = "\(value)"
                             } else {
                                 result = "\(result)\(div)\(value)"
@@ -102,7 +158,7 @@ extension String {
                         
                     } else {
                         
-                        if result.count == 0 {
+                        if result.length == 0 {
                             result = "\("")"
                         } else {
                             result = "\(result)\(div)\("")"
@@ -142,7 +198,7 @@ extension String {
     open func write(text: String) {
         let path = "\(directory)/\(self.csvFileName())"
         let fileManager = FileManager.default
-        let updatedString = text.replacingOccurrences(of: "\n", with: "\\n").replacingOccurrences(of: "\t", with: "\\t").replacingOccurrences(of: "\r", with: "\\r")
+        let updatedString = text.replaceEscapeCharacters()
         
         
         if !fileManager.fileExists(atPath: path) {
@@ -172,7 +228,7 @@ extension String {
     }
     
     func splitUsingDelimiter(_ string: String, separatedBy: String) -> NSArray {
-        if string.count > 0 {
+        if string.length > 0 {
             return string.components(separatedBy: separatedBy) as NSArray;
         }
         return [];
@@ -188,7 +244,7 @@ extension String {
     }
     
     /// read content to the current csv file.
-    open func readFromPath(filePath: String) -> NSMutableDictionary{
+    open func readFromPath(filePath: String) -> NSMutableDictionary {
         let fileManager = FileManager.default
         let output:NSMutableDictionary = NSMutableDictionary()
         
@@ -202,20 +258,22 @@ extension String {
                 let csvText = try String(contentsOf: localPathURL, encoding: encodingType);
                 
                 // Check the csv count
-                if csvText.count > 0 {
+                if csvText.length > 0 {
                     
                     // Split based on Newline delimiter
-                    let csvArray = self.splitUsingDelimiter(csvText, separatedBy: "\n") as NSArray
+                    //let csvArray = self.splitUsingDelimiter(csvText, separatedBy: "\n") as NSArray
+                    let csvArray = csvText.lines
                     if csvArray.count >= 2 {
                         var fieldsArray:NSArray = [];
                         let rowsArray:NSMutableArray  = NSMutableArray()
+                        let div = self.getDividerCharacter()
                         for row in csvArray {
                             // Get the CSV headers
-                            if((row as! String).contains(csvArray[0] as! String)) {
-                                fieldsArray = self.splitUsingDelimiter(row as! String, separatedBy: divider?.rawValue ?? ",") as NSArray;
+                            if(row.contains(csvArray[0])) {
+                                fieldsArray = self.splitUsingDelimiter(row, separatedBy: div) as NSArray;
                             } else {
                                 // Get the CSV values
-                                let valuesArray = self.splitUsingDelimiter(row as! String, separatedBy: divider?.rawValue ?? ",") as NSArray;
+                                let valuesArray = self.splitUsingDelimiter(row, separatedBy: div) as NSArray;
                                 if valuesArray.count == fieldsArray.count  && valuesArray.count > 0{
                                     let rowJson:NSMutableDictionary = self.generateDict(fieldsArray, valuesArray: valuesArray)
                                     if rowJson.allKeys.count > 0 && valuesArray.count == rowJson.allKeys.count && rowJson.allKeys.count == fieldsArray.count {
@@ -230,6 +288,7 @@ extension String {
                             output.setObject(fieldsArray, forKey: "fields" as NSCopying)
                             output.setObject(rowsArray, forKey: "rows" as NSCopying)
                             output.setObject(localPathURL.lastPathComponent, forKey: "name" as NSCopying)
+                            output.setObject(self.getDividerCharacter(), forKey: "divider" as NSCopying)
                         }
                     }
                 }
@@ -302,6 +361,12 @@ extension String {
 //MARK: -  Export public Methods
 
 ///a free function to make export the CSV file from file name, fields and values
+public func exportCSV(_ csvObj:CSV) -> String {
+    CSVExport.export.divider = DividerType.comma
+    return CSVExport.export.exportCSV(csvObj.name, fields: csvObj.fields, values: csvObj.rows);
+}
+
+///a free function to make export the CSV file from file name, fields and values
 public func exportCSV(_ filename:String, fields: NSArray, values: NSArray) -> String{
     return CSVExport.export.exportCSV(filename, fields: fields, values: values);
 }
@@ -341,3 +406,17 @@ public func readCSV(_ filePath:String) -> NSMutableDictionary{
 public func readCSVFromDefaultPath(_ fileName:String) -> NSMutableDictionary{
     return CSVExport.export.readCSVFromDefaultPath(fileName);
 }
+
+
+///a free function to make read the CSV file
+public func readCSVObject(_ filePath:String) -> CSV {
+    let fileDetails = CSVExport.export.readCSV(filePath);
+    return CSVExport.export.converToObject(fileDetails)
+}
+
+///a free function to make read the CSV file
+public func readCSVObjectFromDefaultPath(_ fileName:String) -> CSV {
+    let fileDetails = CSVExport.export.readCSVFromDefaultPath(fileName);
+    return CSVExport.export.converToObject(fileDetails)
+}
+
