@@ -7,8 +7,7 @@ Simple way to export csv file with rich feature framework and written in Swift. 
 
 ## Features
 
-- Able to give CSV file name.
-- Able to set CSV headers using fields.
+- Able to give CSV file name, headers and rows using property keys.
 - Able to convert JSON string into CSV.
 - Able to Read the CSV file and convert to NSDictionary.
 - Able to Read the CSV file and convert to CSV class(Object Oriented Approach).
@@ -94,84 +93,67 @@ NSLog(@"%@",filePath);
 
 ```
 
-### Example 2 - Swift
+### Example 2 - Swift - Object Oriented Approach
 
 ```swift
 
 // First User Object
 let user1:NSMutableDictionary = NSMutableDictionary()
+user1.setObject(107, forKey: "userid" as NSCopying);
 user1.setObject("vignesh", forKey: "name" as NSCopying);
 user1.setObject("vigneshuvi@gmail.com", forKey: "email" as NSCopying);
+user1.setObject(true, forKey:"isValidUser" as NSCopying)
+user1.setObject("Hi 'Vignesh!' \nhow are you? \t Shall we meet tomorrow? \r Thanks ", forKey: "message" as NSCopying);
+user1.setObject(571.05, forKey: "balance" as NSCopying);
 
 // Secound User Object
 let user2:NSMutableDictionary = NSMutableDictionary()
+user2.setObject(108, forKey: "userid" as NSCopying);
 user2.setObject("vinoth", forKey: "name" as NSCopying);
+user2.setObject(false, forKey:"isValidUser" as NSCopying)
 user2.setObject("vinoth@gmail.com", forKey: "email" as NSCopying);
+user2.setObject("Hi 'Vinoth!', \nHow are you? \t Shall we meet tomorrow? \r Thanks ", forKey: "message" as NSCopying);
+user2.setObject(567.50, forKey: "balance" as NSCopying);
 
 // Add fields into columns of CSV headers
-let fields:NSMutableArray = NSMutableArray()
-fields.add("name");
-fields.add("email");
+let header = ["userid", "name", "email", "message", "isValidUser","balance"]
+
 
 // Add dictionary into rows of CSV Array
 let data:NSMutableArray  = NSMutableArray()
 data.add(user1);
 data.add(user2);
 
-let filePath:String = SwiftCSVExport.exportCSV("userlist",fields: fields,values: data);
-print(filePath)
+// Create a object for write CSV
+let writeCSVObj = CSV()
+writeCSVObj.rows = data
+writeCSVObj.fields = header as NSArray
+writeCSVObj.name = "userlist"
+
+// Write File using CSV class object
+let filePath:String = SwiftCSVExport.exportCSV(writeCSVObj);
+print("File Path: \(filePath)")
+
+// Read File and convert as CSV class object
+let readCSVObj = readCSVObject(filePath);
+ 
+// Use 'SwiftLoggly' pod framework to print the Dictionary
+loggly(LogType.Info, text: readCSVObj.name)
 
 ```
 
-### Example 3 - Swift
+### Write Output:
+
 ```swift
 
+File Path: xxxxxx/xxxxxxx/Documents/Exports/userlist.csv
 
-// First User Object
-let user1:NSMutableDictionary = NSMutableDictionary()
-user1.setObject("vignesh", forKey: "name" as NSCopying);
-user1.setObject("vigneshuvi@gmail.com", forKey: "email" as NSCopying);
-user1.setObject("Hi Vignesh, \nhow are you? \t Shall we meet tomorrow? \r Thanks ", forKey: "address" as NSCopying);
+[💙 Info -  Jan 2, 2018, 4:52:28 PM]: userlist.csv
 
-// Secound User Object
-let user2:NSMutableDictionary = NSMutableDictionary()
-user2.setObject("vinoth", forKey: "name" as NSCopying);
-user2.setObject("vinoth@gmail.com", forKey: "email" as NSCopying);
-user2.setObject("Hi Vinoth, \nHow are you? \t Shall we meet tomorrow? \r Thanks ", forKey: "address" as NSCopying);
-
-// Add dictionary into rows of CSV Array
-let data:NSMutableArray  = NSMutableArray()
-data.add(user1);
-data.add(user2);
-
-let filePath:String = SwiftCSVExport.exportCSV("userlist",fields: ["name", "email", "address"],values: data);
-print(filePath)
 
 ```
 
-### Example 4  - Swift
-```swift
-
-
-// Generate CSV file
-let user1:NSMutableDictionary = NSMutableDictionary()
-user1.setObject("vignesh", forKey: "name" as NSCopying);
-user1.setObject("vigneshuvi@gmail.com", forKey: "email" as NSCopying);
-
-let user2:NSMutableDictionary = NSMutableDictionary()
-user2.setObject("vinoth", forKey: "name" as NSCopying);
-user2.setObject("vinoth@gmail.com", forKey: "email" as NSCopying);
-
-let data:NSMutableArray  = NSMutableArray()
-data.add(user1);
-data.add(user2);
-
-let filePath:String = SwiftCSVExport.exportCSV("userlist",fields: ["name", "email"],values: data);
-print(filePath)
-
-```
-
-### Example 5  - Swift
+### Example 3  - Swift
 
 ```swift
 
@@ -183,9 +165,14 @@ print(filePath)
 // Read File
 let fileDetails = readCSV(filePath);
 
+// Read File and convert as NSMutableDictionary.
+let fileDetails = readCSV(filePath);
+
 // Use 'SwiftLoggly' pod framework to print the Dictionary
-if fileDetails.allKeys.count > 0 {
+if fileDetails.hasData {
     loggly(LogType.Info, dictionary: fileDetails)
+    loggly(LogType.Info, text: fileDetails.name)
+    loggly(LogType.Info, text: fileDetails.delimiter)
 }
 
 
@@ -197,13 +184,14 @@ if fileDetails.allKeys.count > 0 {
 
 Output: userlist.csv
 
-name,email
-vignesh,vigneshuvi@gmail.com
-vinoth,vinoth@gmail.com
+userid,name,email,message,isValidUser,balance
+107,  "vignesh",  "vigneshuvi@gmail.com",  "Hi 'Vignesh!' \nhow are you? \t Shall we meet tomorrow? \r Thanks ",  1,  571.05
+108,  "vinoth",  "vinoth@gmail.com",  "Hi 'Vinoth!', \nHow are you? \t Shall we meet tomorrow? \r Thanks ",  0,  567.5
+109,  "John",  "John@gmail.com",  "Hi 'John!' \nHow are you? \t Shall we meet tomorrow? \r Thanks ",  1,  105.41
 
 ```
 
-### Example 6  - Swift
+### Example 4  - Swift
 
 ```swift
 
@@ -222,71 +210,53 @@ if fileDetails.allKeys.count > 0 {
 
 ```swift
 
-[💙 Info -  Feb 7, 2017, 4:19:23 PM]: {
+[💙 Info -  Jan 2, 2018, 4:52:21 PM]: {
+  "fields" : [
+    "userid",
+    "name",
+    "email",
+    "message",
+    "isValidUser",
+    "balance"
+  ],
   "rows" : [
     {
-      "name" : "vignesh",
-      "email" : "vigneshuvi@gmail.com"
+      "email" : "\"vigneshuvi@gmail.com\"",
+      "message" : "\"Hi 'Vignesh!' \\nhow are you? \\t Shall we meet tomorrow? \\r Thanks \"",
+      "userid" : 107,
+      "name" : "\"vignesh\"",
+      "isValidUser" : 1,
+      "balance" : 571.05
     },
     {
-      "name" : "vinoth",
-      "email" : "vinoth@gmail.com"
+      "email" : "\"vinoth@gmail.com\"",
+      "message" : "\"Hi 'Vinoth!', \\nHow are you? \\t Shall we meet tomorrow? \\r Thanks \"",
+      "userid" : 108,
+      "name" : "\"vinoth\"",
+      "isValidUser" : 0,
+      "balance" : 567.5
+    },
+    {
+      "email" : "\"John@gmail.com\"",
+      "message" : "\"Hi 'John!' \\nHow are you? \\t Shall we meet tomorrow? \\r Thanks \"",
+      "userid" : 109,
+      "name" : "\"John\"",
+      "isValidUser" : 1,
+      "balance" : 105.41
     }
   ],
   "name" : "userlist.csv",
-  "fields" : [
-    "name",
-    "email"
-  ]
+  "divider" : ","
 }
 
-
 ```
 
-### Example 7  - Swift - Object Oriented Approach
-
-```swift
-
-// Generate CSV file
-let user1:NSMutableDictionary = NSMutableDictionary()
-user1.setObject("vignesh", forKey: "name" as NSCopying);
-user1.setObject("vigneshuvi@gmail.com", forKey: "email" as NSCopying);
-user1.setObject("Hi Vignesh, \nhow are you? \t Shall we meet tomorrow? \r Thanks ", forKey: "address" as NSCopying);
-
-let user2:NSMutableDictionary = NSMutableDictionary()
-user2.setObject("vinoth", forKey: "name" as NSCopying);
-user2.setObject("vinoth@gmail.com", forKey: "email" as NSCopying);
-user2.setObject("Hi Vinoth, \nHow are you? \t Shall we meet tomorrow? \r Thanks ", forKey: "address" as NSCopying);
-
-
-let data:NSMutableArray  = NSMutableArray()
-data.add(user1);
-data.add(user2);
-
-// Create a object for write CSV
-let writeCSVObj = CSV()
-writeCSVObj.rows = data
-writeCSVObj.fields = ["name", "email", "address"]
-writeCSVObj.name = "userlist"
-
-// Write File using CSV class object
-let filePath:String = SwiftCSVExport.exportCSV(writeCSVObj);
-print(filePath)
-
-// Read File in Object Oriented Way
-let readCSVObj = readCSVObject(filePath);
-
-// Use 'SwiftLoggly' pod framework to print the Dictionary
-loggly(LogType.Info, text: readCSVObj.name)
-
-
-```
 
 ### Write Output:
 
 ```swift
 
-Output: userlist
+Output: userlist.csv
 
 ```
 

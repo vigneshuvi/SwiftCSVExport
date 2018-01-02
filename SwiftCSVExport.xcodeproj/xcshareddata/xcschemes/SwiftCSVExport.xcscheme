@@ -29,17 +29,16 @@
       language = ""
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "OBJ_29"
-               BuildableName = "CSVExportTests.xctest"
-               BlueprintName = "CSVExportTests"
-               ReferencedContainer = "container:SwiftCSVExport.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "0B54EBCE1E4987A00043976B"
+            BuildableName = "SwiftCSVExport.framework"
+            BlueprintName = "SwiftCSVExport"
+            ReferencedContainer = "container:SwiftCSVExport.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>
@@ -72,6 +71,15 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "0B54EBCE1E4987A00043976B"
+            BuildableName = "SwiftCSVExport.framework"
+            BlueprintName = "SwiftCSVExport"
+            ReferencedContainer = "container:SwiftCSVExport.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">
