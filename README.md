@@ -3,7 +3,7 @@
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 
 # SwiftCSVExport
-Simple way to export csv file with rich feature framework and written in Swift. It supports both Objective-C and Swift projects.
+Swift CSV Export is rich features framework and it helpful to create, read and write CSV files in simple way. It supports both Objective-C and Swift projects.
 
 ## Features
 
@@ -142,11 +142,17 @@ loggly(LogType.Info, text: readCSVObj.name)
 
 ```
 
-### Write Output:
+### Write & Read Output:
 
 ```swift
 
 File Path: xxxxxx/xxxxxxx/Documents/Exports/userlist.csv
+
+userid,name,email,message,isValidUser,balance
+107,  "vignesh",  "vigneshuvi@gmail.com",  "Hi 'Vignesh!' \nhow are you? \t Shall we meet tomorrow? \r Thanks ",  1,  571.05
+108,  "vinoth",  "vinoth@gmail.com",  "Hi 'Vinoth!', \nHow are you? \t Shall we meet tomorrow? \r Thanks ",  0,  567.5
+109,  "John",  "John@gmail.com",  "Hi 'John!' \nHow are you? \t Shall we meet tomorrow? \r Thanks ",  1,  105.41
+
 
 [💙 Info -  Jan 2, 2018, 4:52:28 PM]: userlist.csv
 
@@ -162,19 +168,6 @@ let string = "[{\"name\":\"vignesh\",\"email\":\"vigneshuvi@gmail.com\"},{\"name
 let filePath:String = exportCSV("userlist", fields:["name","email"], values:string);
 print(filePath)
 
-// Read File
-let fileDetails = readCSV(filePath);
-
-// Read File and convert as NSMutableDictionary.
-let fileDetails = readCSV(filePath);
-
-// Use 'SwiftLoggly' pod framework to print the Dictionary
-if fileDetails.hasData {
-    loggly(LogType.Info, dictionary: fileDetails)
-    loggly(LogType.Info, text: fileDetails.name)
-    loggly(LogType.Info, text: fileDetails.delimiter)
-}
-
 
 ```
 
@@ -182,12 +175,7 @@ if fileDetails.hasData {
 
 ```swift
 
-Output: userlist.csv
-
-userid,name,email,message,isValidUser,balance
-107,  "vignesh",  "vigneshuvi@gmail.com",  "Hi 'Vignesh!' \nhow are you? \t Shall we meet tomorrow? \r Thanks ",  1,  571.05
-108,  "vinoth",  "vinoth@gmail.com",  "Hi 'Vinoth!', \nHow are you? \t Shall we meet tomorrow? \r Thanks ",  0,  567.5
-109,  "John",  "John@gmail.com",  "Hi 'John!' \nHow are you? \t Shall we meet tomorrow? \r Thanks ",  1,  105.41
+File Path: xxxxxx/xxxxxxx/Documents/Exports/userlist.csv
 
 ```
 
@@ -251,14 +239,6 @@ if fileDetails.allKeys.count > 0 {
 
 ```
 
-
-### Write Output:
-
-```swift
-
-Output: userlist.csv
-
-```
 
 
 That will create a CSV file in the proper directory on both OS X and iOS.
