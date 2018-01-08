@@ -3,7 +3,7 @@
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 
 # SwiftCSVExport
-**Swift CSV Export is lightweight rich features framework** and it helpful to create, read and write CSV files in simple way. It supports both Objective-C and Swift projects.
+**Swift CSV Export** is _lightweight & rich features framework_ and it _helpful to create, read and write CSV files_ in simple way. It supports both Objective-C and Swift projects.
 
 ## Features
 
