@@ -16,6 +16,10 @@
 		0B6178681ECF1B1100BCE646 /* CSVExport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6178671ECF1B1100BCE646 /* CSVExport.swift */; };
 		0B61786E1ECF302F00BCE646 /* CSVExport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6178671ECF1B1100BCE646 /* CSVExport.swift */; };
 		0B69156F1E4DB535007C9394 /* SwiftCSVExport.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B54EBD21E4987A00043976B /* SwiftCSVExport.h */; };
+		0BD058FE2008B8390008EE27 /* CSVConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BD058FD2008B8390008EE27 /* CSVConstants.swift */; };
+		0BD059002008B8B30008EE27 /* CSVValidateProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BD058FF2008B8B30008EE27 /* CSVValidateProtocol.swift */; };
+		0BD059012008B8C90008EE27 /* CSVConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BD058FD2008B8390008EE27 /* CSVConstants.swift */; };
+		0BD059022008B8CB0008EE27 /* CSVValidateProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BD058FF2008B8B30008EE27 /* CSVValidateProtocol.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,7 +52,9 @@
 		0B54EBF81E499C1B0043976B /* SwiftCSVExportOSXTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftCSVExportOSXTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0B54EBFD1E499C1B0043976B /* SwiftCSVExportOSXTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftCSVExportOSXTests.swift; sourceTree = "<group>"; };
 		0B54EBFF1E499C1B0043976B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		0B6178671ECF1B1100BCE646 /* CSVExport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CSVExport.swift; path = Sources/CSVExport.swift; sourceTree = "<group>"; };
+		0B6178671ECF1B1100BCE646 /* CSVExport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CSVExport.swift; sourceTree = "<group>"; };
+		0BD058FD2008B8390008EE27 /* CSVConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSVConstants.swift; sourceTree = "<group>"; };
+		0BD058FF2008B8B30008EE27 /* CSVValidateProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSVValidateProtocol.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,8 +95,10 @@
 			isa = PBXGroup;
 			children = (
 				0B6178671ECF1B1100BCE646 /* CSVExport.swift */,
+				0BD058FD2008B8390008EE27 /* CSVConstants.swift */,
+				0BD058FF2008B8B30008EE27 /* CSVValidateProtocol.swift */,
 			);
-			name = Sources;
+			path = Sources;
 			sourceTree = "<group>";
 		};
 		0B54EBC51E4987A00043976B = {
@@ -335,6 +343,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				0B6178681ECF1B1100BCE646 /* CSVExport.swift in Sources */,
+				0BD058FE2008B8390008EE27 /* CSVConstants.swift in Sources */,
+				0BD059002008B8B30008EE27 /* CSVValidateProtocol.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -351,6 +361,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				0B61786E1ECF302F00BCE646 /* CSVExport.swift in Sources */,
+				0BD059012008B8C90008EE27 /* CSVConstants.swift in Sources */,
+				0BD059022008B8CB0008EE27 /* CSVValidateProtocol.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

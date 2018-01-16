@@ -37,8 +37,8 @@ class SwiftCSVExportTests: XCTestCase {
         let user2:NSMutableDictionary = NSMutableDictionary()
         user2.setObject(108, forKey: "userid" as NSCopying);
         user2.setObject("vinoth", forKey: "name" as NSCopying);
-        user2.setObject(false, forKey:"isValidUser" as NSCopying)
         user2.setObject("vinoth@gmail.com", forKey: "email" as NSCopying);
+        user2.setObject(true, forKey:"isValidUser" as NSCopying)
         user2.setObject("Hi 'Vinoth!', \nHow are you? \t Shall we meet tomorrow? \r Thanks ", forKey: "message" as NSCopying);
         user2.setObject(567.50, forKey: "balance" as NSCopying);
         
@@ -52,22 +52,52 @@ class SwiftCSVExportTests: XCTestCase {
         // Create a object for write CSV
         let writeCSVObj = CSV()
         writeCSVObj.rows = data
+        writeCSVObj.delimiter = DividerType.semicolon.rawValue
         writeCSVObj.fields = header as NSArray
         writeCSVObj.name = "userlist"
         
+        // Enable Strict Validation
+        CSVExport.export.enableStrictValidation = true
+        
+        // Able to convert JSON string into CSV.
+        let string = "[{\"name\":\"vignesh\",\"email\":\"vigneshuvi@gmail.com\"},{\"name\":\"vinoth\",\"email\":\"vinoth@gmail.com\"}]";
+        
         // Write File using CSV class object
-        writeCSVObj.delimiter = DividerType.semicolon.rawValue
-        let filePath:String = SwiftCSVExport.exportCSV(writeCSVObj);
-        print(filePath)
+        let result1 = exportCSV("userlist", fields:["userid","name","email"], values:string);
+        XCTAssertEqual(false, result1.isSuccess)
+        if result1.isSuccess {
+            guard let filePath =  result1.value else {
+                print("Export Error: \(String(describing: result1.value))")
+                return
+            }
+            print("File Path: \(filePath)")
+            
+        } else {
+            print("Export Error: \(String(describing: result1.value))")
+        }
+
         
-        
-        // Print read CSV object
+        let result = exportCSV(writeCSVObj);
+        XCTAssertEqual(true, result.isSuccess)
+        if result.isSuccess {
+            guard let filePath =  result.value else {
+                print("Export Error: \(String(describing: result.value))")
+                return
+            }
+            self.testWithFilePath(filePath, rowCount: data.count, columnCount: header.count)
+            print("FilePath: \(filePath)")
+        } else {
+            print("Export Error: \(String(describing: result.value))")
+        }
+    }
+    
+    func testWithFilePath(_ filePath: String, rowCount:Int, columnCount:Int) {
         let fileDetails = readCSV(filePath);
         XCTAssertNotNil(fileDetails)
         XCTAssertTrue(fileDetails.hasData, "CSV file contains record")
         XCTAssertEqual(fileDetails.name, "userlist.csv")
-        XCTAssertEqual(data.count, fileDetails.rows.count)
-        XCTAssertEqual(header.count, fileDetails.fields.count)
+        XCTAssertEqual(rowCount, fileDetails.rows.count)
+        XCTAssertEqual(columnCount, fileDetails.fields.count)
         if fileDetails.hasData {
             print("\n\n***** CSV file contains record *****\n\n")
             print(fileDetails.name)

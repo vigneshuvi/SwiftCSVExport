@@ -61,6 +61,7 @@ class ViewController: UIViewController {
         // Create a object for write CSV
         let writeCSVObj = CSV()
         writeCSVObj.rows = data
+        writeCSVObj.delimiter = DividerType.semicolon.rawValue
         writeCSVObj.fields = header as NSArray
         writeCSVObj.name = "userlist"
         

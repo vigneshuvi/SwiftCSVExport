@@ -12,6 +12,7 @@
 - Able to give CSV file name, headers and rows using property keys.
 - Able to convert JSON string into CSV.
 - Able to Read the CSV file and convert to NSDictionary.
+- Enable/Disable strict validation while write CSV file.
 - Able to Read the CSV file and convert to CSV class(Object Oriented Approach).
 - Support CocoaPods, mac OS and Vapor framework(Swift Package Manager).
 - Able to encoding CSV based on String.Encoding Type(utf8, ascii, unicode, utf16, etc) Refer: String.Encoding.
@@ -129,18 +130,31 @@ data.add(user2);
 // Create a object for write CSV
 let writeCSVObj = CSV()
 writeCSVObj.rows = data
+writeCSVObj.delimiter = DividerType.comma.rawValue
 writeCSVObj.fields = header as NSArray
 writeCSVObj.name = "userlist"
 
 // Write File using CSV class object
-let filePath:String = SwiftCSVExport.exportCSV(writeCSVObj);
-print("File Path: \(filePath)")
+let result = exportCSV(writeCSVObj);
+if result.isSuccess {
+    guard let filePath =  result.value else {
+        print("Export Error: \(String(describing: result.value))")
+        return
+    }
+    self.testWithFilePath(filePath, rowCount: data.count, columnCount: header.count)
+    print("File Path: \(filePath)")
 
-// Read File and convert as CSV class object
-let readCSVObj = readCSVObject(filePath);
- 
-// Use 'SwiftLoggly' pod framework to print the Dictionary
-loggly(LogType.Info, text: readCSVObj.name)
+    // Read File and convert as CSV class object
+    let readCSVObj = readCSVObject(filePath);
+     
+    // Use 'SwiftLoggly' pod framework to print the Dictionary
+    loggly(LogType.Info, text: readCSVObj.name)
+} else {
+    print("Export Error: \(String(describing: result.value))")
+}
+
+
+
 
 ```
 
@@ -161,14 +175,29 @@ userid,name,email,message,isValidUser,balance
 
 ```
 
-### Example 3  - Swift
+### Example 3  - Swift - Enable Strict Validation
 
 ```swift
 
+// Enable Strict Validation
+CSVExport.export.enableStrictValidation = true
+
 // Able to convert JSON string into CSV.
 let string = "[{\"name\":\"vignesh\",\"email\":\"vigneshuvi@gmail.com\"},{\"name\":\"vinoth\",\"email\":\"vinoth@gmail.com\"}]";
-let filePath:String = exportCSV("userlist", fields:["name","email"], values:string);
-print(filePath)
+
+// Write File using CSV class object
+let result1 = exportCSV("userlist", fields:["userid","name","email"], values:string);
+XCTAssertEqual(false, result1.isSuccess)
+if result1.isSuccess {
+    guard let filePath =  result1.value else {
+        print("Export Error: \(String(describing: result1.value))")
+        return
+    }
+    print("File Path: \(filePath)")
+    
+} else {
+    print("Export Error: \(String(describing: result1.value))")
+}
 
 
 ```
@@ -177,7 +206,7 @@ print(filePath)
 
 ```swift
 
-File Path: xxxxxx/xxxxxxx/Documents/Exports/userlist.csv
+Export Error: Optional("Expected 3 columns, But Parsed 2 columns on row 1")
 
 ```
 
@@ -258,6 +287,10 @@ CSVExport.export.fileName = "Sample" //default is "csvfile"
 
 //Set the directory in which the csv files will be written
 CSVExport.export.directory = "/Library/XXX-folder-name-XXX" //default is the standard exporting directory for each platform.
+
+// Able to set strict validation while create a new CSV file.
+CSVExport.export.enableStrictValidation = true
+
 
 ```
 

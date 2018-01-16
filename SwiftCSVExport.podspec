@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "SwiftCSVExport"
-  s.version      = "1.0.8"
+  s.version      = "2.0.0"
   s.summary      = "Simple way to export csv file with rich feature framework and written in Swift 3 & 4."
 
   # This description is used to generate tags and improve search results.
@@ -24,9 +24,10 @@ Pod::Spec.new do |s|
   #   * Try to keep it short, snappy and to the point.
   #   * Write the description between the DESC delimiters below.
   #   * Finally, don't worry about the indent, CocoaPods strips it!
-  s.description  = "The SwiftCSVExport is a completely customizable framework that can be used in any iOS/Mac app."
+  s.description  = "The SwiftCSVExport is a completely customizable framework that can be used in any iOS/Mac app.(CSV Parser & Data Formater)"
 
   s.homepage     = "https://github.com/vigneshuvi/SwiftCSVExport"
+  s.documentation_url = "https://github.com/vigneshuvi/SwiftCSVExport/blob/master/README.md"
   # s.screenshots  = "www.example.com/screenshots_1.gif", "www.example.com/screenshots_2.gif"
 
 
