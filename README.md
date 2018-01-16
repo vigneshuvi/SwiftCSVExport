@@ -317,7 +317,7 @@ Then run:
 
 To use SwiftCSVExport in your project create/update 'Cartfile.private' file into your project
 
-    // Require version 1.x
+    // Require version 2.x
     
     github "vigneshuvi/SwiftCSVExport"
 
@@ -332,7 +332,7 @@ You need to add to dependencies in your 'Package.swift' and fetch Swift module u
 // Vapor
 
 dependencies: [
-        .Package(url: "https://github.com/vigneshuvi/SwiftCSVExport.git", majorVersion: 1, minor: 0)
+        .Package(url: "https://github.com/vigneshuvi/SwiftCSVExport.git", majorVersion: 2, minor: 0)
         ],
 
 Then run:

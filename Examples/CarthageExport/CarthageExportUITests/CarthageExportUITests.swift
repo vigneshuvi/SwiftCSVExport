@@ -2,7 +2,7 @@
 //  CarthageExportUITests.swift
 //  CarthageExportUITests
 //
-//  Created by qbuser on 08/03/17.
+//  Created by Vignesh on 08/03/17.
 //  Copyright © 2017 vigneshuvi. All rights reserved.
 //
 
