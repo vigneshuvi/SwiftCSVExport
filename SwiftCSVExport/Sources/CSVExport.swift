@@ -133,7 +133,7 @@ extension String {
     open var encodingType:String.Encoding = String.Encoding.utf8;
     
     /// The CSV cell separator
-    open var divider: DividerType?
+    open var divider: String?
     
     /// The CSV File Manager
     let fileManager = FileManager.default
@@ -151,7 +151,7 @@ extension String {
     
     /// Get Divider character
     func getDividerCharacter( ) -> String {
-        return divider?.rawValue ?? ",";
+        return divider ?? ",";
     }
     
     /// A free function to convert from NSMutableDictionary to CSV object
@@ -432,7 +432,7 @@ extension String {
 
 /// A free function to make export the CSV file from file name, fields and values
 public func exportCSV(_ csvObj:CSV) -> String {
-    CSVExport.export.divider = DividerType.comma
+    CSVExport.export.divider = csvObj.delimiter
     return CSVExport.export.exportCSV(csvObj.name, fields: csvObj.fields, values: csvObj.rows);
 }
 

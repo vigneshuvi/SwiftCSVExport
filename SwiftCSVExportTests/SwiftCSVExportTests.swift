@@ -56,6 +56,7 @@ class SwiftCSVExportTests: XCTestCase {
         writeCSVObj.name = "userlist"
         
         // Write File using CSV class object
+        writeCSVObj.delimiter = DividerType.semicolon.rawValue
         let filePath:String = SwiftCSVExport.exportCSV(writeCSVObj);
         print(filePath)
         
