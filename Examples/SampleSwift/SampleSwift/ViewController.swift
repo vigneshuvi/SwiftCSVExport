@@ -41,7 +41,7 @@ class ViewController: UIViewController {
         user2.setObject("vinoth", forKey: "name" as NSCopying);
         user2.setObject(false, forKey:"isValidUser" as NSCopying)
         user2.setObject("vinoth@gmail.com", forKey: "email" as NSCopying);
-        user2.setObject("Hi 'Vinoth!', \nHow are you? \t Shall we meet tomorrow? \r Thanks ", forKey: "message" as NSCopying);
+        user2.setObject("Hi 'Vinoth!'; \nHow are you? \t Shall we meet tomorrow? \r Thanks ", forKey: "message" as NSCopying);
         user2.setObject(567.50, forKey: "balance" as NSCopying);
     
         let data:NSMutableArray  = NSMutableArray()
@@ -53,7 +53,7 @@ class ViewController: UIViewController {
         user3.name = "John"
         user3.email = "John@gmail.com"
         user3.isValidUser = true
-        user3.message = "Hi 'John!' \nHow are you? \t Shall we meet tomorrow? \r Thanks "
+        user3.message = "Hi 'John!'; \nHow are you? \t Shall we meet tomorrow? \r Thanks "
         user3.balance = 105.41;
         data.add(listPropertiesWithValues(user3)) // Able to convert Class object into NSMutableDictionary
         
@@ -66,14 +66,21 @@ class ViewController: UIViewController {
         writeCSVObj.name = "userlist"
         
         // Write File using CSV class object
-        let filePath:String = SwiftCSVExport.exportCSV(writeCSVObj);
-        print(filePath)
-
-        
-        let request = NSURLRequest(url:  URL(fileURLWithPath: filePath) )
-        webview.loadRequest(request as URLRequest)
-        
-        //
+        let result = exportCSV(writeCSVObj);
+        if result.isSuccess {
+            guard let filePath =  result.value else {
+                print("Export Error: \(String(describing: result.value))")
+                return
+            }
+            
+            print("File Path: \(filePath)")
+            self.readCSVPath(filePath)
+        } else {
+            print("Export Error: \(String(describing: result.value))")
+        }
+    }
+    
+    func readCSVPath(_ filePath: String) {
         let fileDetails = readCSV(filePath);
         if fileDetails.hasData {
             loggly(LogType.Info, dictionary: fileDetails)
@@ -81,14 +88,14 @@ class ViewController: UIViewController {
             loggly(LogType.Info, text: fileDetails.delimiter)
         }
         
-        // Read File in Object Oriented Way
+        let request = NSURLRequest(url:  URL(fileURLWithPath: filePath) )
+        webview.loadRequest(request as URLRequest)
+        
+        // Read File and convert as CSV class object
         let readCSVObj = readCSVObject(filePath);
-        
-        
         
         // Use 'SwiftLoggly' pod framework to print the Dictionary
         loggly(LogType.Info, text: readCSVObj.name)
-        
     }
     
     override func didReceiveMemoryWarning() {
