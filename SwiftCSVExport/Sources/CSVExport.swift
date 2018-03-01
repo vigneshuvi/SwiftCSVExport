@@ -31,7 +31,7 @@ import Foundation
     let fileManager = FileManager.default
     
     /// Export singleton
-    open class var export: CSVExport {
+    @objc open class var export: CSVExport {
         
         struct Static {
             static let instance: CSVExport = CSVExport()
