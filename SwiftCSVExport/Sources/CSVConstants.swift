@@ -105,7 +105,7 @@ extension String {
     func formatCSVRow(_ div:String, value:Any) -> String {
         if let string = value as? String {
             // Wrap around double quotes
-            let fString = "\"\(string)\""
+            let fString = "\(string)"
             return self.length == 0 ? fString  : "\(self)\(div)  \(fString)"
         } else {
             return self.length == 0 ? "\(value)" : "\(self)\(div)  \(value)"

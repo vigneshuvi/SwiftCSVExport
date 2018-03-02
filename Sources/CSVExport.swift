@@ -13,25 +13,25 @@ import Foundation
     
     // MARK: - Variables
     /// The directory in which the cvs files will be written
-    open var directory = CSVExport.defaultDirectory();
+    @objc open var directory = CSVExport.defaultDirectory();
     
     /// The name of the csv files.
-    open var fileName = "csvfile";
+    @objc open var fileName = "csvfile";
     
     /// The CSV encodeing format
     open var encodingType:String.Encoding = String.Encoding.utf8;
     
     /// The CSV cell separator
-    open var divider: String?
+    @objc open var divider: String?
     
     /// Enable Strict Validation
-    open var enableStrictValidation: Bool = false
+    @objc open var enableStrictValidation: Bool = false
     
     /// The CSV File Manager
-    let fileManager = FileManager.default
+    @objc let fileManager = FileManager.default
     
     /// Export singleton
-    open class var export: CSVExport {
+    @objc open class var export: CSVExport {
         
         struct Static {
             static let instance: CSVExport = CSVExport()
@@ -42,12 +42,12 @@ import Foundation
     // MARK: - Util - Functions
     
     /// Get Divider character
-    func getDividerCharacter( ) -> String {
+    @objc func getDividerCharacter( ) -> String {
         return divider ?? ",";
     }
     
     /// A free function to convert from NSMutableDictionary to CSV object
-    open func converToObject(_ fileDetails:NSMutableDictionary) -> CSV{
+    @objc open func converToObject(_ fileDetails:NSMutableDictionary) -> CSV{
         let csvObj = CSV()
         if fileDetails.allKeys.count > 0 {
             let keys:[String] = fileDetails.allKeys as! [String]
@@ -77,7 +77,7 @@ import Foundation
         return csvObj;
     }
     
-    func generateDict(_ fieldsArray: [String], valuesArray: [String] ) -> NSMutableDictionary {
+    @objc func generateDict(_ fieldsArray: [String], valuesArray: [String] ) -> NSMutableDictionary {
         let rowsDictionary:NSMutableDictionary = NSMutableDictionary()
         for i in 0..<valuesArray.count {
             let key = fieldsArray[i];
@@ -94,7 +94,7 @@ import Foundation
         return rowsDictionary;
     }
     
-    func splitUsingDelimiter(_ string: String, separatedBy: String) -> [Any] {
+    @objc func splitUsingDelimiter(_ string: String, separatedBy: String) -> [Any] {
         if string.length > 0 {
             let t1 = string.components(separatedBy: separatedBy );
             return t1.filter{ !$0.isEmpty }
@@ -103,7 +103,7 @@ import Foundation
     }
     
     /// Write content to the current csv file.
-    open func getFilePath() -> String{
+    @objc open func getFilePath() -> String{
         let path = "\(directory)/\(self.csvFileName())"
         if !fileManager.fileExists(atPath: path) {
             return "";
@@ -114,33 +114,35 @@ import Foundation
     // MARK: - Functions
     
     /// A free function to make read the CSV file
-    open func readCSV(_ filePath:String) -> NSMutableDictionary{
+    @objc open func readCSV(_ filePath:String) -> NSMutableDictionary{
         return CSVExport.export.read(filepath: filePath);
     }
     
     
     /// A free function to make read the CSV file
-    open func readCSVFromDefaultPath(_ fileName:String) -> NSMutableDictionary{
+    @objc open func readCSVFromDefaultPath(_ fileName:String) -> NSMutableDictionary{
         return CSVExport.export.read(filename: fileName);
     }
     
-    open func read(filename: String) -> NSMutableDictionary {
+    @objc open func read(filename: String) -> NSMutableDictionary {
         let path = "\(directory)/\(filename)"
         return self.readFromPath(filePath:path);
     }
     
-    open func read(filepath: String) -> NSMutableDictionary {
+    @objc open func read(filepath: String) -> NSMutableDictionary {
         return self.readFromPath(filePath:filepath);
     }
     
-    open func exportCSV(_ filename:String, fields: NSArray, values: NSArray) -> Result<String>{
-        var result:Result<String>? = nil
+    @objc open func exportCSV(_ filename:String, fields: NSArray, values: NSArray) -> CSVResult{
+        var result:CSVResult? = nil
         guard fields.count > 0 || values.count > 0 else {
-            return Result.invalid("Column and Row values are empty.")
+            return CSVResult.init(false, message: "Column and Row values are empty.")!
+            
         }
         
         guard filename.length > 0  else {
-            return Result.invalid("Invalid file name.")
+            
+            return CSVResult.init(false, message: "Invalid file name.")!
         }
         
         if filename.length > 0 {
@@ -156,7 +158,7 @@ import Foundation
             let dictionary = (dict as! NSDictionary);
             if (enableStrictValidation) {
                 let validationResult = validateRow(fields.count , rowColumnCount: dictionary.allKeys.count, row: rowIndex)
-                if validationResult.isFailure {
+                if validationResult.result.isFailure {
                     result = validationResult
                     break
                 }
@@ -173,17 +175,18 @@ import Foundation
             rowIndex = rowIndex+1;
         }
         if result == nil {
-             result = Result.valid(CSVExport.export.getFilePath())
+            let path = "\(directory)/\(self.csvFileName())"
+            result = CSVResult.init(true, message: "Exported Successfully.", filePath:path)!
         }
         return result!
         
     }
     
     /// A free function to make export the CSV file from file name, fields and values
-    open  func exportCSVString(_ filename:String, fields: [String], values: String) -> Result<String>{
+    open  func exportCSVString(_ filename:String, fields: [String], values: String) -> CSVResult{
         // Convert String into NSArray of objects.
         guard let data = (values as NSString).data(using: CSVExport.export.encodingType.rawValue) else {
-            return Result.invalid("Column and Row values are empty.")
+            return CSVResult.init(false, message: "Column and Row values are empty.")!
         }
         do {
             let parsedObject = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.mutableLeaves) as! NSArray
@@ -192,16 +195,16 @@ import Foundation
                 return CSVExport.export.exportCSV(filename, fields: fields as NSArray, values: parsedObject);
             }
         } catch  {
-             print("error handling...\(error)")
-             return Result.invalid("Invalid JSON string.")
+            print("error handling...\(error)")
+            return CSVResult.init(false, message: "Invalid JSON string.")!
         }
-        return Result.invalid("Column and Row values are empty.")
+        return CSVResult.init(false, message: "Column and Row values are empty.")!
     }
     
     // MARK: - File Manager - Util - Functions
     
     /// Write content to the current csv file.
-    open func write(text: String) {
+    @objc open func write(text: String) {
         let path = "\(directory)/\(self.csvFileName())"
         
         let updatedString = text.replaceEscapeCharacters()
@@ -222,7 +225,7 @@ import Foundation
     }
     
     /// Read content to the current csv file.
-    open func readFromPath(filePath: String) -> NSMutableDictionary {
+    @objc open func readFromPath(filePath: String) -> NSMutableDictionary {
         let output:NSMutableDictionary = NSMutableDictionary()
         
         // Find the CSV file path is available
@@ -245,13 +248,14 @@ import Foundation
                     var fieldsArray = [Any]();
                     var rowsArray = [Any]();
                     let div = self.getDividerCharacter()
+                    var index = 0;
                     for row in csvArray {
                         // Get the CSV headers
-                        if(row.contains(csvArray[0])) {
+                        if index == 0 {
                             fieldsArray = self.splitUsingDelimiter(row, separatedBy: div);
                         } else {
                             // Get the CSV values
-                            let valuesArray = self.splitUsingDelimiter(row, separatedBy: "\(div)  ");
+                            let valuesArray = self.splitUsingDelimiter(row, separatedBy: row.contains("\(div)  ") ? "\(div)  ":div);
                             if valuesArray.count == fieldsArray.count  && valuesArray.count > 0 {
                                 let rowJson:NSMutableDictionary = self.generateDict(fieldsArray as! [String], valuesArray: valuesArray as! [String])
                                 if rowJson.allKeys.count > 0 && valuesArray.count == rowJson.allKeys.count && rowJson.allKeys.count == fieldsArray.count {
@@ -259,6 +263,7 @@ import Foundation
                                 }
                             }
                         }
+                        index = index + 1;
                     }
                     
                     // Set the CSV headers & Values and name in the dict.
@@ -281,7 +286,7 @@ import Foundation
     
     
     /// Do the checks and cleanup
-    open func cleanup() {
+    @objc open func cleanup() {
         let path = "\(directory)/\(self.csvFileName())"
         let size = self.fileSize(path)
         if size > 0 {
@@ -295,7 +300,7 @@ import Foundation
     }
     
     /// Check the size of a file
-    open func fileSize(_ path: String) -> UInt64 {
+    @objc open func fileSize(_ path: String) -> UInt64 {
         guard fileManager.fileExists(atPath: path) else {
             return 0
         }
@@ -308,12 +313,12 @@ import Foundation
     
     
     /// Get the CSV name
-    func csvFileName() -> String {
+    @objc func csvFileName() -> String {
         return "\(fileName).csv"
     }
     
     /// Get the default CSV directory
-    class func defaultDirectory() -> String {
+    @objc class func defaultDirectory() -> String {
         var path = ""
         let fileManager = FileManager.default
         #if os(iOS)
@@ -340,62 +345,63 @@ import Foundation
 
 //MARK: -  Export public Methods
 
-/// A free function to make export the CSV file from file name, fields and values
-public func exportCSV(_ csvObj:CSV) -> Result<String> {
-    CSVExport.export.divider =  csvObj.delimiter
-    return CSVExport.export.exportCSV(csvObj.name, fields: csvObj.fields, values: csvObj.rows);
-}
+//MARK: -  Export public Methods
 
-/// A free function to make export the CSV file from file name, fields and values
-public func exportCSV(_ filename:String, fields: NSArray, values: NSArray) -> Result<String>{
-    return CSVExport.export.exportCSV(filename, fields: fields, values: values);
-}
-
-/// A free function to make export the CSV file from file name, fields and values
-public func exportCSV(_ filename:String, fields: [String], values: NSArray) -> Result<String>{
-    return CSVExport.export.exportCSV(filename, fields: fields as NSArray, values: values);
-}
-
-/// A free function to make export the CSV file from file name, fields and values
-public func exportCSV(_ filename:String, fields: [String], values: [[String:Any]]) -> Result<String>{
-    // Convert [String:Any] to NSDictionary
-    let data:NSMutableArray  = NSMutableArray()
-    for dict in  values {
-        let row:NSMutableDictionary = NSMutableDictionary()
-        for i in 0 ..< fields.count {
-            row.setValue((dict[fields[i]] != nil ? dict[fields[i]]  : ""), forKey: fields[i] );
-        }
-        data.add(row)
+extension CSVExport {
+    /// A free function to make export the CSV file from file name, fields and values
+    @objc open static func export(_ csvObj:CSV) -> CSVResult {
+        CSVExport.export.divider =  csvObj.delimiter
+        return CSVExport.export.exportCSV(csvObj.name, fields: csvObj.fields, values: csvObj.rows);
     }
     
-    return CSVExport.export.exportCSV(filename, fields: fields as NSArray, values: data);
-}
-
-/// A free function to make export the CSV file from file name, fields and values
-public func exportCSV(_ filename:String, fields: [String], values: String) -> Result<String>{
-    return CSVExport.export.exportCSVString(filename, fields: (fields as NSArray) as! [String], values: values);
-}
-
-/// A free function to make read the CSV file
-public func readCSV(_ filePath:String) -> NSMutableDictionary{
-    return CSVExport.export.readCSV(filePath);
-}
-
-/// A free function to make read the CSV file
-public func readCSVFromDefaultPath(_ fileName:String) -> NSMutableDictionary{
-    return CSVExport.export.readCSVFromDefaultPath(fileName);
-}
-
-/// A free function to make read the CSV file
-public func readCSVObject(_ filePath:String) -> CSV {
-    let fileDetails = CSVExport.export.readCSV(filePath);
-    return CSVExport.export.converToObject(fileDetails)
-}
-
-/// A free function to make read the CSV file
-public func readCSVObjectFromDefaultPath(_ fileName:String) -> CSV {
-    let fileDetails = CSVExport.export.readCSVFromDefaultPath(fileName);
-    return CSVExport.export.converToObject(fileDetails)
+    /// A free function to make export the CSV file from file name, fields and values
+    @objc open static  func exportWithNSArray(_ filename:String, fields: NSArray, values: NSArray) -> CSVResult{
+        return CSVExport.export.exportCSV(filename, fields: fields, values: values);
+    }
+    
+    /// A free function to make export the CSV file from file name, fields and values
+    @objc open static  func exportWithArray(_ filename:String, fields: [String], values: [[String:Any]]) -> CSVResult{
+        // Convert [String:Any] to NSDictionary
+        let data:NSMutableArray  = NSMutableArray()
+        for dict in  values {
+            let row:NSMutableDictionary = NSMutableDictionary()
+            for i in 0 ..< fields.count {
+                row.setValue((dict[fields[i]] != nil ? dict[fields[i]]  : ""), forKey: fields[i] );
+            }
+            data.add(row)
+        }
+        
+        return CSVExport.export.exportCSV(filename, fields: fields as NSArray, values: data);
+    }
+    
+    /// A free function to make export the CSV file from file name, fields and values
+    @objc open static  func exportWithString(_ filename:String, fields: [String], values: String) -> CSVResult{
+        return CSVExport.export.exportCSVString(filename, fields: (fields as NSArray) as! [String], values: values);
+    }
+    
+    /// A free function to make read the CSV file
+    @objc open static  func readCSV(_ filePath:String) -> NSMutableDictionary {
+        return CSVExport.export.readCSV(filePath);
+    }
+    
+    /// A free function to make read the CSV file
+    @objc open static  func readCSVFromDefaultPath(_ fileName:String) -> NSMutableDictionary{
+        return CSVExport.export.readCSVFromDefaultPath(fileName);
+    }
+    
+    /// A free function to make read the CSV file
+    @objc open static  func readCSVObject(_ filePath:String) -> CSV {
+        let fileDetails = CSVExport.export.readCSV(filePath);
+        return CSVExport.export.converToObject(fileDetails)
+    }
+    
+    /// A free function to make read the CSV file
+    @objc open static  func readCSVObjectFromDefaultPath(_ fileName:String) -> CSV {
+        let fileDetails = CSVExport.export.readCSVFromDefaultPath(fileName);
+        return CSVExport.export.converToObject(fileDetails)
+    }
+    
+    
 }
 
 /// List Properties With Values. Helpful to convert Object into NSMutableDictionary.

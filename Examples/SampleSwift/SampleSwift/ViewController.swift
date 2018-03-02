@@ -33,7 +33,7 @@ class ViewController: UIViewController {
         user1.setObject("vignesh", forKey: "name" as NSCopying);
         user1.setObject("vigneshuvi@gmail.com", forKey: "email" as NSCopying);
         user1.setObject(true, forKey:"isValidUser" as NSCopying)
-        user1.setObject("Hi 'Vignesh!' \nhow are you? \t Shall we meet tomorrow? \r Thanks ", forKey: "message" as NSCopying);
+        user1.setObject("Hi 'Vignesh!' \nhow are you? \t Shall we meet tomorrow? \r Thanks, Vignesh ", forKey: "message" as NSCopying);
         user1.setObject(571.05, forKey: "balance" as NSCopying);
         
         let user2:NSMutableDictionary = NSMutableDictionary()
@@ -41,7 +41,7 @@ class ViewController: UIViewController {
         user2.setObject("vinoth", forKey: "name" as NSCopying);
         user2.setObject(false, forKey:"isValidUser" as NSCopying)
         user2.setObject("vinoth@gmail.com", forKey: "email" as NSCopying);
-        user2.setObject("Hi 'Vinoth!'; \nHow are you? \t Shall we meet tomorrow? \r Thanks ", forKey: "message" as NSCopying);
+        user2.setObject("Hi \"'Vinoth!',; \nHow are you? \t Shall we meet tomorrow? \r Thanks, Vinoth ", forKey: "message" as NSCopying);
         user2.setObject(567.50, forKey: "balance" as NSCopying);
     
         let data:NSMutableArray  = NSMutableArray()
@@ -61,41 +61,51 @@ class ViewController: UIViewController {
         // Create a object for write CSV
         let writeCSVObj = CSV()
         writeCSVObj.rows = data
-        writeCSVObj.delimiter = DividerType.semicolon.rawValue
+        writeCSVObj.delimiter = DividerType.comma.rawValue
         writeCSVObj.fields = header as NSArray
         writeCSVObj.name = "userlist"
         
         // Write File using CSV class object
-        let result = exportCSV(writeCSVObj);
-        if result.isSuccess {
-            guard let filePath =  result.value else {
-                print("Export Error: \(String(describing: result.value))")
+        let output = CSVExport.export(writeCSVObj);
+        if output.result.isSuccess {
+            guard let filePath =  output.filePath else {
+                print("Export Error: \(String(describing: output.message))")
                 return
             }
             
             print("File Path: \(filePath)")
             self.readCSVPath(filePath)
         } else {
-            print("Export Error: \(String(describing: result.value))")
+            print("Export Error: \(String(describing: output.message))")
         }
+        
+        let fileManager = FileManager.default
+        if let fileURL = Bundle.main.url(forResource: "test", withExtension: "json") {
+            print(fileURL)
+            
+            let filePath = fileURL.path
+            // Check if file exists
+            if fileManager.fileExists(atPath: filePath) {
+                print("File exists")
+                self.readCSVPath(filePath)
+            } else {
+                print("File does not exist")
+            }
+        }
+
     }
     
     func readCSVPath(_ filePath: String) {
-        let fileDetails = readCSV(filePath);
-        if fileDetails.hasData {
-            loggly(LogType.Info, dictionary: fileDetails)
-            loggly(LogType.Info, text: fileDetails.name)
-            loggly(LogType.Info, text: fileDetails.delimiter)
-        }
-        
+
         let request = NSURLRequest(url:  URL(fileURLWithPath: filePath) )
         webview.loadRequest(request as URLRequest)
         
         // Read File and convert as CSV class object
-        let readCSVObj = readCSVObject(filePath);
+        let readCSVObj = CSVExport.readCSVObject(filePath);
         
         // Use 'SwiftLoggly' pod framework to print the Dictionary
         loggly(LogType.Info, text: readCSVObj.name)
+        loggly(LogType.Info, text: readCSVObj.delimiter)
     }
     
     override func didReceiveMemoryWarning() {

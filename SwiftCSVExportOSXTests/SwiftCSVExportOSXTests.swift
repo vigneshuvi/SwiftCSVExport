@@ -57,22 +57,22 @@ class SwiftCSVExportOSXTests: XCTestCase {
         
         // Write File using CSV class object
         CSVExport.export.enableStrictValidation = true
-        let result = exportCSV(writeCSVObj);
-        XCTAssertEqual(true, result.isSuccess)
-        if result.isSuccess {
-            guard let filePath =  result.value else {
-                print("Export Error: \(String(describing: result.value))")
+        let output = CSVExport.export(writeCSVObj);
+        XCTAssertEqual(true, output.result.isSuccess)
+        if output.result.isSuccess {
+            guard let filePath =  output.filePath else {
+                print("Export Error: \(String(describing: output.message))")
                 return
             }
             self.testWithFilePath(filePath, rowCount: data.count, columnCount: header.count)
             print("FilePath: \(filePath)")
         } else {
-            print("Export Error: \(String(describing: result.value))")
+            print("Export Error: \(String(describing: output.message))")
         }
     }
     
     func testWithFilePath(_ filePath: String, rowCount:Int, columnCount:Int) {
-        let fileDetails = readCSV(filePath);
+        let fileDetails = CSVExport.readCSV(filePath);
         XCTAssertNotNil(fileDetails)
         XCTAssertTrue(fileDetails.hasData, "CSV file contains record")
         XCTAssertEqual(fileDetails.name, "userlist.csv")
@@ -90,7 +90,7 @@ class SwiftCSVExportOSXTests: XCTestCase {
         // This is an example of a performance test case.
         self.measure {
             // Put the code you want to measure the time of here.
-            let fileDetails = readCSVFromDefaultPath("userlist.csv");
+            let fileDetails = CSVExport.readCSVFromDefaultPath("userlist.csv");
             XCTAssertNotNil(fileDetails)
             XCTAssertTrue(fileDetails.hasData, "CSV file contains record")
             XCTAssertEqual(fileDetails.name, "userlist.csv")
