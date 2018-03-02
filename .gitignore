@@ -73,8 +73,8 @@ Examples/SampleSwift/Pods/*
 Examples/ObjectiveC/Demo/SampleSwift.xcworkspace/*
 Examples/ObjectiveC/Demo/xcuserdata
 Examples/ObjectiveC/Demo/xcodebuild.log
-Examples/ObjectiveC/Demo/build
-Examples/ObjectiveC/Demo/Pods/*
+Examples/ObjectiveC/build
+Examples/ObjectiveC/Pods/*
 
 Examples/CarthageExport/Carthage/*
 
