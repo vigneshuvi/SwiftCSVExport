@@ -349,18 +349,18 @@ import Foundation
 
 extension CSVExport {
     /// A free function to make export the CSV file from file name, fields and values
-    @objc open static func export(_ csvObj:CSV) -> CSVResult {
+    @objc public static func export(_ csvObj:CSV) -> CSVResult {
         CSVExport.export.divider =  csvObj.delimiter
         return CSVExport.export.exportCSV(csvObj.name, fields: csvObj.fields, values: csvObj.rows);
     }
     
     /// A free function to make export the CSV file from file name, fields and values
-    @objc open static  func exportWithNSArray(_ filename:String, fields: NSArray, values: NSArray) -> CSVResult{
+    @objc public static  func exportWithNSArray(_ filename:String, fields: NSArray, values: NSArray) -> CSVResult{
         return CSVExport.export.exportCSV(filename, fields: fields, values: values);
     }
     
     /// A free function to make export the CSV file from file name, fields and values
-    @objc open static  func exportWithArray(_ filename:String, fields: [String], values: [[String:Any]]) -> CSVResult{
+    @objc public static  func exportWithArray(_ filename:String, fields: [String], values: [[String:Any]]) -> CSVResult{
         // Convert [String:Any] to NSDictionary
         let data:NSMutableArray  = NSMutableArray()
         for dict in  values {
@@ -375,28 +375,28 @@ extension CSVExport {
     }
     
     /// A free function to make export the CSV file from file name, fields and values
-    @objc open static  func exportWithString(_ filename:String, fields: [String], values: String) -> CSVResult{
+    @objc public static  func exportWithString(_ filename:String, fields: [String], values: String) -> CSVResult{
         return CSVExport.export.exportCSVString(filename, fields: (fields as NSArray) as! [String], values: values);
     }
     
     /// A free function to make read the CSV file
-    @objc open static  func readCSV(_ filePath:String) -> NSMutableDictionary {
+    @objc public static  func readCSV(_ filePath:String) -> NSMutableDictionary {
         return CSVExport.export.readCSV(filePath);
     }
     
     /// A free function to make read the CSV file
-    @objc open static  func readCSVFromDefaultPath(_ fileName:String) -> NSMutableDictionary{
+    @objc public static  func readCSVFromDefaultPath(_ fileName:String) -> NSMutableDictionary{
         return CSVExport.export.readCSVFromDefaultPath(fileName);
     }
     
     /// A free function to make read the CSV file
-    @objc open static  func readCSVObject(_ filePath:String) -> CSV {
+    @objc public static  func readCSVObject(_ filePath:String) -> CSV {
         let fileDetails = CSVExport.export.readCSV(filePath);
         return CSVExport.export.converToObject(fileDetails)
     }
     
     /// A free function to make read the CSV file
-    @objc open static  func readCSVObjectFromDefaultPath(_ fileName:String) -> CSV {
+    @objc public static  func readCSVObjectFromDefaultPath(_ fileName:String) -> CSV {
         let fileDetails = CSVExport.export.readCSVFromDefaultPath(fileName);
         return CSVExport.export.converToObject(fileDetails)
     }
@@ -410,7 +410,7 @@ public func listPropertiesWithValues(_ object: AnyObject?, reflect: Mirror? = ni
     
     let dictionary:NSMutableDictionary = NSMutableDictionary()
     for (_, attr) in mirror.children.enumerated() {
-        if let property_name = attr.label as String! {
+        if let property_name = attr.label as String? {
             dictionary.setObject(attr.value, forKey: property_name as NSCopying);
         }
     }
