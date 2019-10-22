@@ -9,7 +9,7 @@
 
 ## Features
 
-- Support swift 5 and latest Xcode
+- Support swift 4, 4.2 and 5 and latest Xcode
 - Able to give CSV file name, headers and rows using property keys.
 - Able to convert JSON string into CSV.
 - Able to Read the CSV file and convert to NSDictionary.
@@ -20,6 +20,19 @@
 - Able to view the exported CSV documents in iOS Files app by enabling the configuration in your project.
 - Handled the punctuation(\n, \t, \t, and ,) characters in CSV file.
 
+
+## Swift Version
+
+Supported swift 4, 4.2 and 5 and latest Xcode
+
+```swift
+
+pod 'SwiftCSVExport' , '= 2.0.2' // Swift 4
+pod 'SwiftCSVExport' , '= 2.0.3' // Swift 4.2
+pod 'SwiftCSVExport' , '= 2.1.0' // Swift 5
+
+
+```
 
 ## iOS/MacOS import headers
 

@@ -15,11 +15,11 @@
 	<key>CFBundlePackageType</key>
 	<string>FMWK</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.0</string>
+	<string>2.1.0</string>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright © 2017 vigneshuvi. All rights reserved.</string>
+	<string>Copyright © 2019 vigneshuvi. All rights reserved.</string>
 	<key>NSPrincipalClass</key>
 	<string></string>
 </dict>

@@ -8,7 +8,7 @@
 
 import UIKit
 import Foundation
-import SwiftLoggly
+//import SwiftLoggly
 import SwiftCSVExport
 
 class User {
@@ -104,8 +104,8 @@ class ViewController: UIViewController {
         let readCSVObj = CSVExport.readCSVObject(filePath);
         
         // Use 'SwiftLoggly' pod framework to print the Dictionary
-        loggly(LogType.Info, text: readCSVObj.name)
-        loggly(LogType.Info, text: readCSVObj.delimiter)
+//        loggly(LogType.Info, text: readCSVObj.name)
+//        loggly(LogType.Info, text: readCSVObj.delimiter)
     }
     
     override func didReceiveMemoryWarning() {
