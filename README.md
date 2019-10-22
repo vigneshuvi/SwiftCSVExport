@@ -9,6 +9,7 @@
 
 ## Features
 
+- Support swift 5 and latest Xcode
 - Able to give CSV file name, headers and rows using property keys.
 - Able to convert JSON string into CSV.
 - Able to Read the CSV file and convert to NSDictionary.
