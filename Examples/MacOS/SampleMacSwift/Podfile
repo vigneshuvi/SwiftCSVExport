@@ -1,0 +1,24 @@
+# Uncomment this line to define a global platform for your project
+
+target 'SampleMacSwift' do
+  # Comment this line if you're not using Swift and don't want to use dynamic frameworks
+  use_frameworks!
+
+  pod 'SwiftLoggly’
+  # pod 'SwiftCSVExport'
+
+   pod 'SwiftCSVExport', :git => 'https://github.com/vigneshuvi/SwiftCSVExport.git', :tag => '2.1.0'
+
+  # Pods for SampleMacSwift
+
+  target 'SampleMacSwiftTests' do
+    inherit! :search_paths
+    # Pods for testing
+  end
+
+  target 'SampleMacSwiftUITests' do
+    inherit! :search_paths
+    # Pods for testing
+  end
+
+end

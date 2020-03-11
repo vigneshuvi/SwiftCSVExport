@@ -76,6 +76,12 @@ Examples/ObjectiveC/Demo/xcodebuild.log
 Examples/ObjectiveC/build
 Examples/ObjectiveC/Pods/*
 
+Examples/MacOS/SampleMacSwift/SampleMacSwift.xcworkspace/*
+Examples/MacOS/SampleMacSwift/xcuserdata
+Examples/MacOS/SampleMacSwift/xcodebuild.log
+Examples/MacOS/SampleMacSwift/build
+Examples/MacOS/SampleMacSwift/Pods/*
+
 Examples/CarthageExport/Carthage/*
 
 *.lock
