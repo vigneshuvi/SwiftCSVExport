@@ -29,7 +29,7 @@ Supported swift 4, 4.2 and 5 and latest Xcode
 
 pod 'SwiftCSVExport' , '= 2.0.2' // Swift 4
 pod 'SwiftCSVExport' , '= 2.0.3' // Swift 4.2
-pod 'SwiftCSVExport' , '= 2.2.0' // Swift 5
+pod 'SwiftCSVExport' , '= 2.3.0' // Swift 5
 
 
 ```
