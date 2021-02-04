@@ -14,7 +14,7 @@ import Foundation
     case valid
     case invalid
     
-    public var rawValue: RawValue {
+    var rawValue: RawValue {
         switch self {
         case .valid:
             return "valid"
@@ -36,7 +36,7 @@ import Foundation
     
     
     /// Returns `true` if the result is a success, `false` otherwise.
-    public var isSuccess: Bool {
+    var isSuccess: Bool {
         switch self {
         case .valid:
             return true
@@ -46,7 +46,7 @@ import Foundation
     }
     
     /// Returns `true` if the result is a failure, `false` otherwise.
-    public var isFailure: Bool {
+    var isFailure: Bool {
         return !isSuccess
     }
 }

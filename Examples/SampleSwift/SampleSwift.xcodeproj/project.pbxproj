@@ -249,20 +249,20 @@
 					0B3B6C4B1E3F7105003AE9C4 = {
 						CreatedOnToolsVersion = 8.1;
 						DevelopmentTeam = 7FUQA46NH7;
-						LastSwiftMigration = 0900;
+						LastSwiftMigration = 1130;
 						ProvisioningStyle = Automatic;
 					};
 					0B3B6C5F1E3F7105003AE9C4 = {
 						CreatedOnToolsVersion = 8.1;
 						DevelopmentTeam = 7FUQA46NH7;
-						LastSwiftMigration = 0900;
+						LastSwiftMigration = 1130;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 0B3B6C4B1E3F7105003AE9C4;
 					};
 					0B3B6C6A1E3F7105003AE9C4 = {
 						CreatedOnToolsVersion = 8.1;
 						DevelopmentTeam = 7FUQA46NH7;
-						LastSwiftMigration = 0900;
+						LastSwiftMigration = 1130;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 0B3B6C4B1E3F7105003AE9C4;
 					};
@@ -270,10 +270,9 @@
 			};
 			buildConfigurationList = 0B3B6C471E3F7105003AE9C4 /* Build configuration list for PBXProject "SampleSwift" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				English,
 				en,
 				Base,
 			);
@@ -511,7 +510,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -564,7 +563,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -581,7 +580,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.vigneshuvi.SampleSwift;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -596,7 +595,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.vigneshuvi.SampleSwift;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -612,7 +611,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.vigneshuvi.SampleSwiftTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SampleSwift.app/SampleSwift";
 			};
 			name = Debug;
@@ -629,7 +628,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.vigneshuvi.SampleSwiftTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SampleSwift.app/SampleSwift";
 			};
 			name = Release;
@@ -645,7 +644,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.vigneshuvi.SampleSwiftUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TEST_TARGET_NAME = SampleSwift;
 			};
 			name = Debug;
@@ -661,7 +660,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.vigneshuvi.SampleSwiftUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TEST_TARGET_NAME = SampleSwift;
 			};
 			name = Release;
