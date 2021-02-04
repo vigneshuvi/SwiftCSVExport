@@ -28,9 +28,9 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         // Generate CSV file
-        let user1 = ["userid":107,"name" :"vignesh","email":"vigneshuvi@gmail.com","isValidUser":true,"balance":571.05] as [String : Any]
+        let user1 = ["userid":107,"name" :"洸藤村","email":"vigneshuvi@gmail.com","isValidUser":true,"balance":571.05] as [String : Any]
         
-        let user2 = ["userid":107,"name" :"vinoth","email":"vinoth@gmail.com","isValidUser":false,"balance":567.05] as [String : Any]
+        let user2 = ["userid":107,"name" :"ŸÉÿßŸÖŸÑ","email":"vinoth@gmail.com","isValidUser":false,"balance":567.05] as [String : Any]
 
        
         

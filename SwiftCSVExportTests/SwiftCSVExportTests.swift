@@ -38,7 +38,7 @@ class SwiftCSVExportTests: XCTestCase {
         let user2:NSMutableDictionary = NSMutableDictionary()
         user2.setObject(108, forKey: "userid" as NSCopying);
         user2.setObject("vinoth", forKey: "name" as NSCopying);
-        user2.setObject("vinoth@gmail.com", forKey: "email" as NSCopying);
+        user2.setObject("ŸÉÿßŸÖŸÑ", forKey: "email" as NSCopying);
         user2.setObject(true, forKey:"isValidUser" as NSCopying)
         user2.setObject("Hi 'Vinoth!', \nHow are you? \t Shall we meet tomorrow? \r Thanks ", forKey: "message" as NSCopying);
         user2.setObject(567.50, forKey: "balance" as NSCopying);
