@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "SwiftCSVExport"
-  s.version      = "2.4.0"
+  s.version      = "2.5.0"
   s.summary      = "Simple way to export csv file with rich feature framework and written in Swift 4, 4.2 and 5"
 
   # This description is used to generate tags and improve search results.
@@ -67,7 +67,7 @@ Pod::Spec.new do |s|
   # s.platform     = :ios, "5.0"
 
   #  When using multiple platforms
-  s.ios.deployment_target = "8.0"
+  s.ios.deployment_target = "9.0"
   s.osx.deployment_target = "10.9"
   s.swift_version = '5.0'
   # s.watchos.deployment_target = "2.0"
