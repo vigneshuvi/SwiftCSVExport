@@ -9,6 +9,11 @@ let package = Package(
         .target(
             name: "SwiftCSVExport",
             path: "SwiftCSVExport/Sources"
-        )
+        ),
+        .testTarget(
+            name: "SwiftCSVExportTests",
+            dependencies: ["SwiftCSVExport"],
+            path: "Tests")
     ]
+
 )
