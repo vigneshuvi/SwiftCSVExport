@@ -8,7 +8,7 @@ target 'SampleSwift' do
   pod 'SwiftLoggly’
   # pod 'SwiftCSVExport'
 
-   pod 'SwiftCSVExport', :git => 'https://github.com/vigneshuvi/SwiftCSVExport.git', :tag => '2.5.0'
+   pod 'SwiftCSVExport', :git => 'https://github.com/vigneshuvi/SwiftCSVExport.git', :tag => '2.6.0'
 
   # Pods for SampleSwift
 
