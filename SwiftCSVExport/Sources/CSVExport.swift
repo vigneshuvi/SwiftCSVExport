@@ -84,11 +84,11 @@ import Foundation
             let value = valuesArray[i];
             
             if let lessPrecisePI = Float(value) {
-                rowsDictionary.setObject(lessPrecisePI, forKey: key as NSCopying);
+                rowsDictionary.setValue(lessPrecisePI, forKey: key);
             } else if let morePrecisePI = Double(value) {
-                rowsDictionary.setObject(morePrecisePI, forKey: key as NSCopying);
+                rowsDictionary.setValue(morePrecisePI, forKey: key);
             } else {
-                rowsDictionary.setObject(value, forKey: key as NSCopying);
+                rowsDictionary.setValue(value, forKey: key);
             }
         }
         return rowsDictionary;

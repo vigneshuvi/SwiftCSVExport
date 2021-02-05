@@ -106,11 +106,13 @@ extension String {
         if let string = value as? String {
             // Wrap around double quotes
             let doubleQuotes = "'"
-
-            let fString = doubleQuotes+"\(string)"+doubleQuotes
-            return self.length == 0 ? fString  : "\(self)\(div)  \(string)"
+            var fString = doubleQuotes+"\(string)"+doubleQuotes
+            if (self.count == 0) {
+                fString = string
+            }
+            return self.length == 0 ? fString  : "\(self)\(div)\(string)"
         } else {
-            return self.length == 0 ? "\(value)" : "\(self)\(div)  \(value)"
+            return self.length == 0 ? "\(value)" : "\(self)\(div)\(value)"
         }
     }
     
